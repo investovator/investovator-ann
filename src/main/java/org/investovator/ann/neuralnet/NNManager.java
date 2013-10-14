@@ -1,4 +1,4 @@
-package org.investovator.neuralnet;
+package org.investovator.ann.neuralnet;
 
 import org.encog.neural.networks.BasicNetwork;
 
@@ -6,11 +6,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
- * Created with IntelliJ IDEA.
- * User: hasala
- * Date: 10/14/13
- * Time: 7:57 AM
- * To change this template use File | Settings | File Templates.
+ *
+ * @author: hasala
+ * @version: ${Revision}
+ *
  */
 public class NNManager {
 

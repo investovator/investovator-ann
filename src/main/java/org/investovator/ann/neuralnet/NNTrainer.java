@@ -1,4 +1,4 @@
-package org.investovator.neuralnet;
+package org.investovator.ann.neuralnet;
 
 import org.encog.ml.train.MLTrain;
 import org.encog.neural.data.NeuralDataSet;
@@ -10,11 +10,10 @@ import org.encog.persist.EncogDirectoryPersistence;
 import java.io.File;
 
 /**
- * Created with IntelliJ IDEA.
- * User: hasala
- * Date: 10/14/13
- * Time: 6:53 AM
- * To change this template use File | Settings | File Templates.
+ *
+ * @author: hasala
+ * @version: ${Revision}
+ *
  */
 public class NNTrainer {
     private double [][] inputData ;

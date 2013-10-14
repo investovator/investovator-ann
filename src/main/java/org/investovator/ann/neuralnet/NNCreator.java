@@ -1,4 +1,4 @@
-package org.investovator.neuralnet;
+package org.investovator.ann.neuralnet;
 
 import org.encog.engine.network.activation.ActivationLinear;
 import org.encog.engine.network.activation.ActivationSigmoid;
@@ -7,11 +7,10 @@ import org.encog.neural.networks.BasicNetwork;
 import org.encog.neural.networks.layers.BasicLayer;
 
 /**
- * Created with IntelliJ IDEA.
- * User: hasala
- * Date: 10/14/13
- * Time: 6:53 AM
- * To change this template use File | Settings | File Templates.
+ *
+ * @author: hasala
+ * @version: ${Revision}
+ *
  */
 public class NNCreator {
 
