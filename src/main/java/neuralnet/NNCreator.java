@@ -15,14 +15,18 @@ import org.encog.neural.networks.layers.BasicLayer;
  */
 public class NNCreator {
 
-        private BasicNetwork network;
         private int inputParameterCount = 0;
-        private int hiddenLayerNeuronCount = 10;
         private int outputParameterCount = 0;
 
+        public NNCreator(int inputParameterCount,int outputParameterCount){
+            this.inputParameterCount = inputParameterCount;
+            this.outputParameterCount = outputParameterCount;
+        }
 
     public BasicNetwork createNetwork(){
-        network = new BasicNetwork();
+
+        BasicNetwork network = new BasicNetwork();
+        int hiddenLayerNeuronCount = 10;
 
         network.addLayer(new BasicLayer(new ActivationLinear(), true,inputParameterCount));
         network.addLayer(new BasicLayer(new ActivationSigmoid(), true,hiddenLayerNeuronCount));
