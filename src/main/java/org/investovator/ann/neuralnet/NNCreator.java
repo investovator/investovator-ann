@@ -25,7 +25,7 @@ import org.encog.neural.networks.layers.BasicLayer;
 
 /**
  *
- * @author: hasala
+ * @author: Hasala Surasinghe
  * @version: ${Revision}
  *
  */
