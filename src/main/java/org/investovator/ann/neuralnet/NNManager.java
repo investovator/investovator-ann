@@ -36,18 +36,25 @@ public class NNManager {
     private NNCreator nnCreator;
     private NNTrainer nnTrainer;
     private boolean status;
+    private int inputParamCount;
 
     public NNManager(HashMap newParameters,String [] inputParameters,String stockID){
         this.newParameters = newParameters;
         this.inputParameters = inputParameters;
         this.stockID = stockID;
+        this.inputParamCount = inputParameters.length + newParameters.size();
+        status = false;
+    }
 
+    public NNManager(String [] inputParameters,String stockID){
+        this.inputParameters = inputParameters;
+        this.stockID = stockID;
+        this.inputParamCount = inputParameters.length;
         status = false;
     }
 
     public boolean createNeuralNetwork(){
 
-        int inputParamCount = inputParameters.length + newParameters.size();
         nnCreator = new NNCreator(inputParamCount,1);
         nnTrainer = new NNTrainer();
 
