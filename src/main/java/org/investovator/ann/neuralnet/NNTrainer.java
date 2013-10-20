@@ -57,13 +57,16 @@ public class NNTrainer {
             if(train.getIteration() > iterationCount)
             {
                  trainingSucceeded = false;
+                 break;
             }
         } while (train.getError() > error);
 
         double e = network.calculateError(trainingSet);
         System.out.println("Network trained to error: " + e);
 
-        saveNetwork(companyName,network);
+        if(trainingSucceeded){
+            saveNetwork(companyName,network);
+        }
 
         return trainingSucceeded;
     }

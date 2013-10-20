@@ -60,6 +60,7 @@ public class NNManager {
 
         BasicNetwork network = nnCreator.createNetwork();
         status = nnTrainer.TrainANN(network,stockID);
+
         return status;
     }
 
