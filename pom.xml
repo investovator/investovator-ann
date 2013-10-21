@@ -5,10 +5,15 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.investovator</groupId>
-    <artifactId>ann</artifactId>
+    <artifactId>investovator-ann</artifactId>
     <version>0.1</version>
 
     <dependencies>
+        <dependency>
+            <groupId>org.investovator</groupId>
+            <artifactId>investovator-core</artifactId>
+            <version>0.1</version>
+        </dependency>
         <dependency>
             <groupId>org.encog</groupId>
             <artifactId>encog-core</artifactId>
