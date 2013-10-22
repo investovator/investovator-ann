@@ -16,7 +16,7 @@
  *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.investovator.ann.datapreprocessing;
+package org.investovator.ann.data.datanormalizing;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
