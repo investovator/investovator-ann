@@ -18,13 +18,51 @@
 
 package org.investovator.ann.nngaming;
 
+import org.encog.neural.networks.BasicNetwork;
+import org.encog.persist.EncogDirectoryPersistence;
+import org.investovator.ann.data.datanormalizing.DataNormalizer;
+import org.investovator.core.data.api.utils.TradingDataAttribute;
+
+import java.io.File;
+import java.util.Date;
+
 /**
  * @author: Hasala Surasinghe
  * @version: ${Revision}
  */
 public class NNPredictor {
 
+    private BasicNetwork network;
+
     public NNPredictor(){
+
+    }
+
+    private void loadNeuralNetworkModel(String stockID){
+
+        network = (BasicNetwork) EncogDirectoryPersistence.loadObject(new File(stockID));
+
+    }
+
+    public double getPredictedValue(String stockID, Date date, TradingDataAttribute attribute){
+
+        DataNormalizer dataNormalizer = new DataNormalizer();
+        loadNeuralNetworkModel(stockID);
+
+        double predictedPrice;
+        double[][] dataArray;
+        double[] input;
+
+       /* for(int j = 0;j < dataArray[0].length - 1; j++){
+            input[j] =  dataNormalizer.getNormalizedValue(dataArray[0][j],types[j]);
+        }*/
+        double [] outputArr = new double[1];
+
+        //network.compute(input, outputArr);
+
+        dataNormalizer.getNormalizedValue(outputArr[0], attribute);
+
+        return outputArr[0];
 
     }
 }
