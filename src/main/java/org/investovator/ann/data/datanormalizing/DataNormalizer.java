@@ -24,6 +24,7 @@ import org.investovator.core.data.api.utils.TradingDataAttribute;
 
 /**
  * @author: Hasala Surasinghe
+ * @author: Amila Surendra
  * @version: ${Revision}
  */
 public class DataNormalizer {

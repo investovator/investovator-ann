@@ -37,8 +37,8 @@ public class NormalizationModelSerializer {
     public void saveModel(NormalizationModel model, String fileName){
 
         // Save the model to file
-        FileOutputStream fos = null;
-        ObjectOutputStream out = null;
+        FileOutputStream fos;
+        ObjectOutputStream out;
         try {
             fos = new FileOutputStream(fileName);
             out = new ObjectOutputStream(fos);
@@ -54,8 +54,8 @@ public class NormalizationModelSerializer {
     public NormalizationModel readModel(String fileName){
 
         // Read the model from file
-        FileInputStream fis = null;
-        ObjectInputStream in = null;
+        FileInputStream fis;
+        ObjectInputStream in;
         try {
             fis = new FileInputStream(fileName);
             in = new ObjectInputStream(fis);
