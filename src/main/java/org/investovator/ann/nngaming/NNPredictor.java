@@ -16,11 +16,15 @@
  *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.investovator.ann.data;
+package org.investovator.ann.nngaming;
 
 /**
  * @author: Hasala Surasinghe
  * @version: ${Revision}
  */
-public class TradingDataManager {
+public class NNPredictor {
+
+    public NNPredictor(){
+
+    }
 }

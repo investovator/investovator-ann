@@ -16,15 +16,11 @@
  *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.investovator.ann.nngaming;
+package org.investovator.ann.data;
 
 /**
  * @author: Hasala Surasinghe
  * @version: ${Revision}
  */
-public class NNModelLoader {
-
-    public NNModelLoader(){
-
-    }
+public class DataManager {
 }

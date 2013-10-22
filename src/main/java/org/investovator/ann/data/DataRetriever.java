@@ -32,7 +32,7 @@ import java.util.Date;
  * @author: Hasala Surasinghe
  * @version: ${Revision}
  */
-public class TrainingDataRetriever {
+public class DataRetriever {
 
     private final CompanyStockTransactionsData.DataType type;
     private CompanyStockTransactionsDataImpl companyStockTransactionsData;
@@ -43,7 +43,7 @@ public class TrainingDataRetriever {
     private Date endDate;
     private int numOfRows;
 
-    public TrainingDataRetriever(String symbol){
+    public DataRetriever(String symbol){
 
         this.companyStockTransactionsData = new CompanyStockTransactionsDataImpl();
         this.type = CompanyStockTransactionsData.DataType.OHLC;
