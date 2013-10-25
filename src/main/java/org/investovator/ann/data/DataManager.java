@@ -19,6 +19,7 @@
 package org.investovator.ann.data;
 
 import org.investovator.ann.data.datanormalizing.DataNormalizer;
+import org.investovator.ann.neuralnet.NNTrainer;
 import org.investovator.core.data.api.utils.StockTradingData;
 import org.investovator.core.data.api.utils.TradingDataAttribute;
 
@@ -31,6 +32,7 @@ import java.util.*;
 public class DataManager {
 
     private StockTradingData stockTradingData;
+    private NNTrainer nnTrainer;
     private DataRetriever dataRetriever;
     private HashMap<Date,HashMap<TradingDataAttribute,String>> tradingData;
     private HashMap<TradingDataAttribute,String> tradingValues;
@@ -42,7 +44,8 @@ public class DataManager {
     private double inputData [][];
     private double idealData [][];
 
-    public DataManager(String stockID){
+    public DataManager(String stockID,NNTrainer nnTrainer){
+         this.nnTrainer = nnTrainer;
          dataRetriever = new DataRetriever(stockID);
     }
 
@@ -97,7 +100,7 @@ public class DataManager {
             idealData[j][0] = normalizedData[j + 1][closingPriceIndex];
         }
 
-
+        nnTrainer.setTrainingData(inputData,idealData);
 
     }
 

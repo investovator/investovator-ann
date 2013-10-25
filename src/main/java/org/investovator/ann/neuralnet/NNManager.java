@@ -45,7 +45,7 @@ public class NNManager {
         this.inputParameters = inputParameters;
         this.stockID = stockID;
         this.inputParamCount = inputParameters.length + newParameters.size();
-        this.dataManager = new DataManager(stockID);
+        this.dataManager = new DataManager(stockID,nnTrainer);
         status = false;
     }
 
@@ -63,6 +63,8 @@ public class NNManager {
 
         BasicNetwork network = nnCreator.createNetwork();
         dataManager.prepareData();
+        nnTrainer.setIterationCount(10000);   //hardcoded for now
+        nnTrainer.setError(0.001);            //hardcoded for now
         status = nnTrainer.TrainANN(network,stockID);
 
         return status;
