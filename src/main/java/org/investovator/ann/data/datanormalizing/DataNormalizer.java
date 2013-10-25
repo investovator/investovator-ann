@@ -22,6 +22,8 @@ import org.encog.util.arrayutil.NormalizationAction;
 import org.encog.util.arrayutil.NormalizedField;
 import org.investovator.core.data.api.utils.TradingDataAttribute;
 
+import java.util.ArrayList;
+
 /**
  * @author: Hasala Surasinghe
  * @author: Amila Surendra
@@ -30,19 +32,16 @@ import org.investovator.core.data.api.utils.TradingDataAttribute;
 public class DataNormalizer {
 
     int rowCount = 0;
-    double [][] dataArray = null;
     double min = 0;
     double max = 0;
-    //TrainingData trainingData = null;
 
-    public void getNormalizedData(TradingDataAttribute [] attribute){
-
-        double [][] normalizedData = new double[dataArray.length][dataArray[0].length];
+    public double[][] getNormalizedData(double [][] dataArray,ArrayList<TradingDataAttribute> attributes){
 
         NormalizationModelSerializer serializer = new NormalizationModelSerializer();
-        /*int columnCount = data.getMarketData()[0].length;*/
+        int columnCount = dataArray[0].length;
+        int rowCount = dataArray.length;
 
-        int columnCount = 12;
+        double [][] normalizedData = new double[rowCount][columnCount];
 
         /*temporary min-max*/
         for (int j = 0; j < columnCount; j++) {
@@ -69,7 +68,7 @@ public class DataNormalizer {
             model.setOldMin(min);
 
             if(j < columnCount - 1)
-                serializer.saveModel(model, String.valueOf(attribute[j]));
+                serializer.saveModel(model, String.valueOf(attributes.get(j)));
 
             for (int i = 0; i < rowCount; i++) {
 
@@ -78,7 +77,7 @@ public class DataNormalizer {
 
             }
         }
-        //return new NormalizedData(data.getInputTypes(), normalizedData, data.getOutputColumns());
+        return normalizedData;
     }
 
     private double getNormalizedValue(double value){

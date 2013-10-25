@@ -19,6 +19,7 @@
 package org.investovator.ann.neuralnet;
 
 import org.encog.neural.networks.BasicNetwork;
+import org.investovator.ann.data.DataManager;
 
 import java.util.HashMap;
 
@@ -37,12 +38,14 @@ public class NNManager {
     private NNTrainer nnTrainer;
     private boolean status;
     private int inputParamCount;
+    private DataManager dataManager;
 
     public NNManager(HashMap newParameters,String [] inputParameters,String stockID){
         this.newParameters = newParameters;
         this.inputParameters = inputParameters;
         this.stockID = stockID;
         this.inputParamCount = inputParameters.length + newParameters.size();
+        this.dataManager = new DataManager(stockID);
         status = false;
     }
 
@@ -59,6 +62,7 @@ public class NNManager {
         nnTrainer = new NNTrainer();
 
         BasicNetwork network = nnCreator.createNetwork();
+        dataManager.prepareData();
         status = nnTrainer.TrainANN(network,stockID);
 
         return status;

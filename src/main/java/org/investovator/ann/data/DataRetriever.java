@@ -50,11 +50,10 @@ public class DataRetriever {
         this.symbol = symbol;
     }
 
-    public void getTrainingData(){
+    public StockTradingData getTrainingData(){
         retrieveTrainingData();
 
-
-
+        return stockTradingData;
     }
 
     private void retrieveTrainingData(){
