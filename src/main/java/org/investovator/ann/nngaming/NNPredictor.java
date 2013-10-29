@@ -40,7 +40,7 @@ public class NNPredictor {
 
     private void loadNeuralNetworkModel(String stockID){
 
-        network = (BasicNetwork) EncogDirectoryPersistence.loadObject(new File(stockID));
+        network = (BasicNetwork) EncogDirectoryPersistence.loadObject(new File("src/main/resources/"+stockID+"/"+stockID));
 
     }
 
@@ -60,7 +60,7 @@ public class NNPredictor {
 
         //network.compute(input, outputArr);
 
-        dataNormalizer.getNormalizedValue(outputArr[0], attribute);
+        dataNormalizer.getDenormalizedValue(outputArr[0], attribute);
 
         return outputArr[0];
 

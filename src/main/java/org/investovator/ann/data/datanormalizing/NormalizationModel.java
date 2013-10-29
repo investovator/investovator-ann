@@ -18,12 +18,14 @@
 
 package org.investovator.ann.data.datanormalizing;
 
+import java.io.Serializable;
+
 /**
  * @author: Hasala Surasinghe
  * @author: Amila Surendra
  * @version: ${Revision}
  */
-public class NormalizationModel {
+public class NormalizationModel implements Serializable {
 
     private double oldMax;
     private double newMax;

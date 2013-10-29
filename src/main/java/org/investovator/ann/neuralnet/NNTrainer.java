@@ -72,8 +72,10 @@ public class NNTrainer {
     }
 
     private void saveNetwork(String companyName,BasicNetwork network){
+
         System.out.println("Saving network");
-        EncogDirectoryPersistence.saveObject(new File(companyName), network);
+        EncogDirectoryPersistence.saveObject(new File("src/main/resources/"+companyName+"/"+companyName), network);
+
     }
 
     public void setTrainingData(double[][] inputData,double[][] idealData){

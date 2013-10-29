@@ -43,10 +43,11 @@ public class DataManager {
     private double normalizedData [][];
     private double inputData [][];
     private double idealData [][];
+    private String symbol;
 
-    public DataManager(String stockID,NNTrainer nnTrainer){
+    public DataManager(String stockID,NNTrainer nnTrainer,ArrayList<TradingDataAttribute> inputParameters){
          this.nnTrainer = nnTrainer;
-         dataRetriever = new DataRetriever(stockID);
+         dataRetriever = new DataRetriever(stockID,inputParameters);
     }
 
     public void prepareData(){
@@ -54,11 +55,8 @@ public class DataManager {
         tradingData = stockTradingData.getTradingData();
         dates = stockTradingData.getDates();
 
-        tradingDataAttributes = new ArrayList<TradingDataAttribute>(); //only for now, should give reference
-
-        tradingDataAttributes.add(TradingDataAttribute.HIGH_PRICE);
-        tradingDataAttributes.add(TradingDataAttribute.LOW_PRICE);
-        tradingDataAttributes.add(TradingDataAttribute.CLOSING_PRICE);
+        tradingDataAttributes = stockTradingData.getAttributes();
+        symbol = stockTradingData.getStockId();
 
         prepareTradingData();
 
@@ -86,11 +84,11 @@ public class DataManager {
 
         dataNormalizer = new DataNormalizer();
 
-        normalizedData = dataNormalizer.getNormalizedData(marketData,tradingDataAttributes);
+        normalizedData = dataNormalizer.getNormalizedData(marketData,tradingDataAttributes,symbol);
 
         int closingPriceIndex = tradingDataAttributes.indexOf(TradingDataAttribute.CLOSING_PRICE);
         inputData = new double[rowCount - 1][tradingAttributeCount];
-        idealData = new double[rowCount - 1][0];
+        idealData = new double[rowCount - 1][1];
 
         for(int j = 0; j < rowCount - 1; j++){
 

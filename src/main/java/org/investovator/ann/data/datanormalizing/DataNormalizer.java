@@ -31,15 +31,16 @@ import java.util.ArrayList;
  */
 public class DataNormalizer {
 
-    int rowCount = 0;
-    double min = 0;
-    double max = 0;
+    private double min = 0;
+    private double max = 0;
+    private String symbol;
 
-    public double[][] getNormalizedData(double [][] dataArray,ArrayList<TradingDataAttribute> attributes){
+    public double[][] getNormalizedData(double [][] dataArray,ArrayList<TradingDataAttribute> attributes,String symbol){
 
         NormalizationModelSerializer serializer = new NormalizationModelSerializer();
         int columnCount = dataArray[0].length;
         int rowCount = dataArray.length;
+        this.symbol = symbol;
 
         double [][] normalizedData = new double[rowCount][columnCount];
 
@@ -67,16 +68,18 @@ public class DataNormalizer {
             model.setOldMax(max);
             model.setOldMin(min);
 
-            if(j < columnCount - 1)
-                serializer.saveModel(model, String.valueOf(attributes.get(j)));
+            if(j < columnCount)
+                serializer.saveModel(model, String.valueOf(attributes.get(j)),symbol);    //save normalization model
 
             for (int i = 0; i < rowCount; i++) {
-
 
                 normalizedData[i][j] = getNormalizedValue(dataArray[i][j]);
 
             }
         }
+
+
+
         return normalizedData;
     }
 
@@ -115,22 +118,22 @@ public class DataNormalizer {
 
         if(tradingDataAttribute == TradingDataAttribute.CLOSING_PRICE)
         {
-            model = serializer.readModel(String.valueOf(TradingDataAttribute.CLOSING_PRICE));
+            model = serializer.readModel(String.valueOf(TradingDataAttribute.CLOSING_PRICE),symbol);
         }
         else if (tradingDataAttribute == TradingDataAttribute.HIGH_PRICE){
-            model = serializer.readModel(String.valueOf(TradingDataAttribute.HIGH_PRICE));
+            model = serializer.readModel(String.valueOf(TradingDataAttribute.HIGH_PRICE),symbol);
         }
         else if (tradingDataAttribute == TradingDataAttribute.LOW_PRICE){
-            model = serializer.readModel(String.valueOf(TradingDataAttribute.LOW_PRICE));
+            model = serializer.readModel(String.valueOf(TradingDataAttribute.LOW_PRICE),symbol);
         }
         else if(tradingDataAttribute == TradingDataAttribute.TRADES){
-            model = serializer.readModel(String.valueOf(TradingDataAttribute.TRADES));
+            model = serializer.readModel(String.valueOf(TradingDataAttribute.TRADES),symbol);
         }
         else if(tradingDataAttribute == TradingDataAttribute.SHARES){
-            model = serializer.readModel(String.valueOf(TradingDataAttribute.SHARES));
+            model = serializer.readModel(String.valueOf(TradingDataAttribute.SHARES),symbol);
         }
         else if (tradingDataAttribute == TradingDataAttribute.TURNOVER){
-            model = serializer.readModel(String.valueOf(TradingDataAttribute.TURNOVER));
+            model = serializer.readModel(String.valueOf(TradingDataAttribute.TURNOVER),symbol);
         }
 
         return model;

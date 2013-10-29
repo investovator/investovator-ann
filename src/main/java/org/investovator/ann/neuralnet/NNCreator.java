@@ -31,8 +31,8 @@ import org.encog.neural.networks.layers.BasicLayer;
  */
 public class NNCreator {
 
-        private int inputParameterCount = 0;
-        private int outputParameterCount = 0;
+        final private int inputParameterCount;
+        final private int outputParameterCount;
 
         public NNCreator(int inputParameterCount,int outputParameterCount){
             this.inputParameterCount = inputParameterCount;

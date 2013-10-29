@@ -20,7 +20,9 @@ package org.investovator.ann.neuralnet;
 
 import org.encog.neural.networks.BasicNetwork;
 import org.investovator.ann.data.DataManager;
+import org.investovator.core.data.api.utils.TradingDataAttribute;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -31,8 +33,11 @@ import java.util.HashMap;
  */
 public class NNManager {
 
+    final int iterationCount = 10000;
+    final double error = 0.01;
+
     private HashMap<String,String> newParameters;
-    private String [] inputParameters;
+    private ArrayList<TradingDataAttribute> inputParameters;
     private String stockID;
     private NNCreator nnCreator;
     private NNTrainer nnTrainer;
@@ -40,19 +45,18 @@ public class NNManager {
     private int inputParamCount;
     private DataManager dataManager;
 
-    public NNManager(HashMap newParameters,String [] inputParameters,String stockID){
+    public NNManager(HashMap newParameters,ArrayList<TradingDataAttribute> inputParameters,String stockID){
         this.newParameters = newParameters;
         this.inputParameters = inputParameters;
         this.stockID = stockID;
-        this.inputParamCount = inputParameters.length + newParameters.size();
-        this.dataManager = new DataManager(stockID,nnTrainer);
+        this.inputParamCount = inputParameters.size() + newParameters.size();
         status = false;
     }
 
-    public NNManager(String [] inputParameters,String stockID){
+    public NNManager(ArrayList<TradingDataAttribute> inputParameters,String stockID){
         this.inputParameters = inputParameters;
         this.stockID = stockID;
-        this.inputParamCount = inputParameters.length;
+        this.inputParamCount = inputParameters.size();
         status = false;
     }
 
@@ -60,11 +64,12 @@ public class NNManager {
 
         nnCreator = new NNCreator(inputParamCount,1);
         nnTrainer = new NNTrainer();
+        dataManager = new DataManager(stockID,nnTrainer,inputParameters);
 
         BasicNetwork network = nnCreator.createNetwork();
         dataManager.prepareData();
-        nnTrainer.setIterationCount(10000);   //hardcoded for now
-        nnTrainer.setError(0.001);            //hardcoded for now
+        nnTrainer.setIterationCount(iterationCount);
+        nnTrainer.setError(error);
         status = nnTrainer.TrainANN(network,stockID);
 
         return status;

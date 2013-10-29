@@ -18,10 +18,7 @@
 
 package org.investovator.ann.data.datanormalizing;
 
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.io.*;
 
 /**
  * @author: Hasala Surasinghe
@@ -34,13 +31,19 @@ public class NormalizationModelSerializer {
     public NormalizationModelSerializer(){
     }
 
-    public void saveModel(NormalizationModel model, String fileName){
+    public void saveModel(NormalizationModel model, String fileName, String symbol){
 
         // Save the model to file
         FileOutputStream fos;
         ObjectOutputStream out;
         try {
-            fos = new FileOutputStream(fileName);
+
+            File modelSavePath = new File("src/main/resources/"+symbol);
+
+            if (!modelSavePath.exists())
+                modelSavePath.mkdir();
+
+            fos = new FileOutputStream(modelSavePath+"/"+fileName);
             out = new ObjectOutputStream(fos);
             out.writeObject(model);
 
@@ -51,13 +54,13 @@ public class NormalizationModelSerializer {
 
     }
 
-    public NormalizationModel readModel(String fileName){
+    public NormalizationModel readModel(String fileName, String symbol){
 
         // Read the model from file
         FileInputStream fis;
         ObjectInputStream in;
         try {
-            fis = new FileInputStream(fileName);
+            fis = new FileInputStream("src/main/resources/"+symbol+"/"+fileName);
             in = new ObjectInputStream(fis);
             normalizationModel = (NormalizationModel) in.readObject();
             in.close();
