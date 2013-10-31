@@ -25,9 +25,6 @@ import org.investovator.core.data.api.utils.TradingDataAttribute;
 import org.investovator.core.data.exeptions.DataAccessException;
 import org.investovator.core.data.exeptions.DataNotFoundException;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -50,7 +47,7 @@ public class DataRetriever {
 
         this.companyStockTransactionsData = new CompanyStockTransactionsDataImpl();
         this.symbol = symbol;
-        this.numOfRows = 400;
+        this.numOfRows = 720;
         this.attributes = attributes;
     }
 
@@ -62,13 +59,11 @@ public class DataRetriever {
 
     private void retrieveTrainingData(){
         try {
-            DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
-            try {
-                startingDate = df.parse("7/24/2010");
-                endDate = df.parse("12/26/2011")  ;
-            } catch (ParseException e) {
-                e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-            }
+
+            Date[] dateRange = companyStockTransactionsData.getDataDaysRange(CompanyStockTransactionsData.DataType.OHLC,
+                    symbol);
+            startingDate = dateRange[0];
+            endDate = dateRange[1];
 
             stockTradingData = companyStockTransactionsData.getTradingData(CompanyStockTransactionsData.DataType.OHLC,
                     symbol,startingDate,endDate,numOfRows,attributes);

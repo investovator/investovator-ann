@@ -80,6 +80,9 @@ public class DataManager {
             tradingValues = tradingData.get(next);
             for(int j = 0; j < tradingAttributeCount; j++){
 
+                if(tradingValues.get(tradingDataAttributes.get(j)).isEmpty())
+                    marketData[i][j] = 0.0;
+                else
                 marketData[i][j] = Double.parseDouble(tradingValues.get(tradingDataAttributes.get(j)));
 
             }

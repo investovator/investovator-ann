@@ -28,34 +28,71 @@ import java.util.ArrayList;
  */
 public class DataPreprocessor {
 
-
+    private double marketData[][];
+    private ArrayList<TradingDataAttribute> attributes;
+    private TradingDataAttribute attribute;
+    private double[][] processedData;
 
     public double[][] preProcessData(double[][] marketData, ArrayList<TradingDataAttribute> attributes,
                                      TradingDataAttribute attribute){
+
+        this.marketData = marketData;
+        this.attributes = attributes;
+        this.attribute = attribute;
+
+        resolveNullValues();
+
+        prepareData();
+
+        return processedData;
+    }
+
+    private void resolveNullValues(){
+
+        int rowCount = marketData.length;
+        int colCount = marketData[0].length;
+
+        for(int i = 0; i < rowCount; i++)
+        {
+
+            for(int j = 0; j < colCount; j++){
+
+                double temp = marketData[i][j];
+                if(temp == 0.0){
+
+                    if(marketData[i + 1][j] == 0.0)
+                        marketData[i][j] = marketData[i - 1][j];
+                    else
+                        marketData[i][j] = (marketData[i - 1][j] + marketData[i + 1][j]) / 2;
+
+                }
+            }
+
+        }
+
+    }
+
+    private void prepareData(){
 
         int rowCount = marketData.length;
         int colCount = marketData[0].length;
         int attributeIndex = attributes.indexOf(attribute);
 
-        double[][] processedData = new double[rowCount - 1][colCount + 1];
+        processedData = new double[rowCount - 1][colCount + 1];
 
         for(int i = 0; i < rowCount - 1; i++)
         {
 
-           for(int j = 0; j < colCount + 1; j++){
+            for(int j = 0; j < colCount + 1; j++){
 
-               if(j == colCount)
-                processedData[i][j] = marketData[i+1][attributeIndex];
-               else
-                processedData[i][j] = marketData[i][j];
+                if(j == colCount)
+                    processedData[i][j] = marketData[i+1][attributeIndex];
+                else
+                    processedData[i][j] = marketData[i][j];
 
-           }
+            }
 
         }
-        return processedData;
-    }
-
-    private void resolveNullValues(){
 
     }
 

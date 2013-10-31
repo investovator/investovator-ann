@@ -76,7 +76,7 @@ public class DataNormalizer {
                 normalizedData[i][j] = getNormalizedValue(dataArray[i][j]);
 
             }
-            System.out.println(normalizedData[5][j]);
+            System.out.println(normalizedData[406][j]);
         }
 
         return normalizedData;

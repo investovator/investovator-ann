@@ -52,12 +52,12 @@ public class NNPredictor {
 
         double predictedPrice;
         double[][] dataArray;
-        double[] input = {0.4994350282485876,
-                0.5017804154302671,
-                0.5276796230859835,
-                0.01820024492208944,
-                0.056129985228951254,
-                0.023795888834763777
+        double[] input = {0.17270682329417644,
+                0.17786561264822134,
+                0.17942021415513187,
+                0.004399504322512997,
+                0.06149341142020498,
+                0.004548830271886382
         };
 
 
@@ -68,7 +68,7 @@ public class NNPredictor {
 
         network.compute(input, outputArr);
 
-        outputArr[0] = dataNormalizer.getDenormalizedValue(outputArr[0], attribute);
+        //outputArr[0] = dataNormalizer.getDenormalizedValue(outputArr[0], attribute);
 
         System.out.println(outputArr[0]);
         return outputArr[0];
