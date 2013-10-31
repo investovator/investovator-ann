@@ -38,10 +38,10 @@ public class NormalizationModelSerializer {
         ObjectOutputStream out;
         try {
 
-            File modelSavePath = new File("src/main/resources/"+symbol);
+            File modelSavePath = new File("resources/"+symbol);
 
             if (!modelSavePath.exists())
-                modelSavePath.mkdir();
+                modelSavePath.mkdirs();
 
             fos = new FileOutputStream(modelSavePath+"/"+fileName);
             out = new ObjectOutputStream(fos);
@@ -60,7 +60,7 @@ public class NormalizationModelSerializer {
         FileInputStream fis;
         ObjectInputStream in;
         try {
-            fis = new FileInputStream("src/main/resources/"+symbol+"/"+fileName);
+            fis = new FileInputStream("resources/"+symbol+"/"+fileName);
             in = new ObjectInputStream(fis);
             normalizationModel = (NormalizationModel) in.readObject();
             in.close();

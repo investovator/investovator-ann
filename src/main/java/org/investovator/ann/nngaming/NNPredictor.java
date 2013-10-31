@@ -40,28 +40,37 @@ public class NNPredictor {
 
     private void loadNeuralNetworkModel(String stockID){
 
-        network = (BasicNetwork) EncogDirectoryPersistence.loadObject(new File("src/main/resources/"+stockID+"/"+stockID));
+        network = (BasicNetwork) EncogDirectoryPersistence.loadObject(new File("resources/"+stockID+"/"+stockID));
 
     }
 
     public double getPredictedValue(String stockID, Date date, TradingDataAttribute attribute){
 
         DataNormalizer dataNormalizer = new DataNormalizer();
+        dataNormalizer.setSymbol(stockID);
         loadNeuralNetworkModel(stockID);
 
         double predictedPrice;
         double[][] dataArray;
-        double[] input;
+        double[] input = {0.4994350282485876,
+                0.5017804154302671,
+                0.5276796230859835,
+                0.01820024492208944,
+                0.056129985228951254,
+                0.023795888834763777
+        };
+
 
        /* for(int j = 0;j < dataArray[0].length - 1; j++){
             input[j] =  dataNormalizer.getNormalizedValue(dataArray[0][j],types[j]);
         }*/
         double [] outputArr = new double[1];
 
-        //network.compute(input, outputArr);
+        network.compute(input, outputArr);
 
-        dataNormalizer.getDenormalizedValue(outputArr[0], attribute);
+        outputArr[0] = dataNormalizer.getDenormalizedValue(outputArr[0], attribute);
 
+        System.out.println(outputArr[0]);
         return outputArr[0];
 
     }

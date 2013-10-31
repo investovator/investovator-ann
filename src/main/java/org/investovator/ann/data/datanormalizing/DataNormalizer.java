@@ -33,14 +33,14 @@ public class DataNormalizer {
 
     private double min = 0;
     private double max = 0;
+
     private String symbol;
 
-    public double[][] getNormalizedData(double [][] dataArray,ArrayList<TradingDataAttribute> attributes,String symbol){
+    public double[][] getNormalizedData(double [][] dataArray,ArrayList<TradingDataAttribute> attributes){
 
         NormalizationModelSerializer serializer = new NormalizationModelSerializer();
         int columnCount = dataArray[0].length;
         int rowCount = dataArray.length;
-        this.symbol = symbol;
 
         double [][] normalizedData = new double[rowCount][columnCount];
 
@@ -76,9 +76,8 @@ public class DataNormalizer {
                 normalizedData[i][j] = getNormalizedValue(dataArray[i][j]);
 
             }
+            System.out.println(normalizedData[5][j]);
         }
-
-
 
         return normalizedData;
     }
@@ -137,5 +136,9 @@ public class DataNormalizer {
         }
 
         return model;
+    }
+
+    public void setSymbol(String symbol) {
+        this.symbol = symbol;
     }
 }

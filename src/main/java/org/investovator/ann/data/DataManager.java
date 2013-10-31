@@ -19,6 +19,7 @@
 package org.investovator.ann.data;
 
 import org.investovator.ann.data.datanormalizing.DataNormalizer;
+import org.investovator.ann.data.datapreprocessing.DataPreprocessor;
 import org.investovator.ann.neuralnet.NNTrainer;
 import org.investovator.core.data.api.utils.StockTradingData;
 import org.investovator.core.data.api.utils.TradingDataAttribute;
@@ -38,9 +39,12 @@ public class DataManager {
     private HashMap<TradingDataAttribute,String> tradingValues;
     private Set<Date> dates;
     private ArrayList<TradingDataAttribute> tradingDataAttributes;
-    private double marketData [][];
     private DataNormalizer dataNormalizer;
+    private DataPreprocessor dataPreprocessor;
+
+    private double marketData [][];
     private double normalizedData [][];
+    private double preprocessedData[][];
     private double inputData [][];
     private double idealData [][];
     private String symbol;
@@ -82,24 +86,35 @@ public class DataManager {
             i++;
         }
 
+        dataPreprocessor = new DataPreprocessor();
+        preprocessedData = dataPreprocessor.preProcessData(marketData,tradingDataAttributes,TradingDataAttribute.CLOSING_PRICE);
+
+
         dataNormalizer = new DataNormalizer();
+        dataNormalizer.setSymbol(symbol);
+        tradingDataAttributes.add(TradingDataAttribute.CLOSING_PRICE);
+        normalizedData = dataNormalizer.getNormalizedData(preprocessedData,tradingDataAttributes);
 
-        normalizedData = dataNormalizer.getNormalizedData(marketData,tradingDataAttributes,symbol);
+        int normalizedDataRowCount = normalizedData.length;
+        int normalizedDataColCount = normalizedData[0].length;
 
-        int closingPriceIndex = tradingDataAttributes.indexOf(TradingDataAttribute.CLOSING_PRICE);
-        inputData = new double[rowCount - 1][tradingAttributeCount];
-        idealData = new double[rowCount - 1][1];
+        inputData = new double[normalizedDataRowCount][normalizedDataColCount];
+        idealData = new double[normalizedDataRowCount][1];
 
-        for(int j = 0; j < rowCount - 1; j++){
+        for(int j = 0; j < normalizedDataRowCount; j++){
 
-            for(int k = 0; k < colCount; k++){
+            for(int k = 0; k < normalizedDataColCount; k++){
                 inputData[j][k] = normalizedData[j][k];
+
             }
-            idealData[j][0] = normalizedData[j + 1][closingPriceIndex];
+
+            idealData[j][0] = normalizedData[j][normalizedDataColCount - 1];
+
         }
 
         nnTrainer.setTrainingData(inputData,idealData);
 
     }
+
 
 }

@@ -50,7 +50,7 @@ public class DataRetriever {
 
         this.companyStockTransactionsData = new CompanyStockTransactionsDataImpl();
         this.symbol = symbol;
-        this.numOfRows = 100;
+        this.numOfRows = 400;
         this.attributes = attributes;
     }
 
@@ -64,8 +64,8 @@ public class DataRetriever {
         try {
             DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
             try {
-                startingDate = df.parse("10/24/2010");
-                endDate = df.parse("2/26/2011")  ;
+                startingDate = df.parse("7/24/2010");
+                endDate = df.parse("12/26/2011")  ;
             } catch (ParseException e) {
                 e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
             }

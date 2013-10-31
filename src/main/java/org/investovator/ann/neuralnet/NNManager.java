@@ -34,7 +34,7 @@ import java.util.HashMap;
 public class NNManager {
 
     final int iterationCount = 10000;
-    final double error = 0.01;
+    final double error = 0.001;
 
     private HashMap<String,String> newParameters;
     private ArrayList<TradingDataAttribute> inputParameters;
