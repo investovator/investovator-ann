@@ -68,15 +68,16 @@ public class DataNormalizer {
             model.setOldMax(max);
             model.setOldMin(min);
 
-            if(j < columnCount)
-                serializer.saveModel(model, String.valueOf(attributes.get(j)),symbol);    //save normalization model
+            if(j < columnCount - 1)
+                serializer.saveModel(model, String.valueOf(attributes.get(j)), symbol);
+
 
             for (int i = 0; i < rowCount; i++) {
 
                 normalizedData[i][j] = getNormalizedValue(dataArray[i][j]);
 
             }
-            System.out.println(normalizedData[406][j]);
+            System.out.println(normalizedData[6][j]);
         }
 
         return normalizedData;

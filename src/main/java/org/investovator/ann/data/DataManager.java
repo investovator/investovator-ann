@@ -35,12 +35,14 @@ public class DataManager {
     private StockTradingData stockTradingData;
     private NNTrainer nnTrainer;
     private DataRetriever dataRetriever;
+    private DataNormalizer dataNormalizer;
+    private DataPreprocessor dataPreprocessor;
+
     private HashMap<Date,HashMap<TradingDataAttribute,String>> tradingData;
     private HashMap<TradingDataAttribute,String> tradingValues;
     private Set<Date> dates;
     private ArrayList<TradingDataAttribute> tradingDataAttributes;
-    private DataNormalizer dataNormalizer;
-    private DataPreprocessor dataPreprocessor;
+    private TradingDataAttribute predictingAttribute = TradingDataAttribute.CLOSING_PRICE;         //ToDO
 
     private double marketData [][];
     private double normalizedData [][];
@@ -90,7 +92,7 @@ public class DataManager {
         }
 
         dataPreprocessor = new DataPreprocessor();
-        preprocessedData = dataPreprocessor.preProcessData(marketData,tradingDataAttributes,TradingDataAttribute.CLOSING_PRICE);
+        preprocessedData = dataPreprocessor.preProcessData(marketData,tradingDataAttributes,predictingAttribute);
 
 
         dataNormalizer = new DataNormalizer();

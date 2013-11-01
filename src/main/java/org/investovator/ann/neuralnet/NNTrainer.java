@@ -45,7 +45,7 @@ public class NNTrainer {
         trainingSucceeded = true;
     }
 
-    public boolean TrainANN(BasicNetwork network, String companyName){
+    public boolean TrainANN(BasicNetwork network, String stockID){
         NeuralDataSet trainingSet = new BasicNeuralDataSet(inputData, idealData);
 
         // train the neural network
@@ -65,16 +65,16 @@ public class NNTrainer {
         System.out.println("Network trained to error: " + e);
 
         if(trainingSucceeded){
-            saveNetwork(companyName,network);
+            saveNetwork(stockID,network);
         }
 
         return trainingSucceeded;
     }
 
-    private void saveNetwork(String companyName,BasicNetwork network){
+    private void saveNetwork(String stockID,BasicNetwork network){
 
         System.out.println("Saving network");
-        EncogDirectoryPersistence.saveObject(new File("resources/"+companyName+"/"+companyName), network);
+        EncogDirectoryPersistence.saveObject(new File("resources/"+stockID+"/"+stockID), network);
 
     }
 

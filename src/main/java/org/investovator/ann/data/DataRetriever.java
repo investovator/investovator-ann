@@ -39,8 +39,6 @@ public class DataRetriever {
 
     private String symbol;
     private ArrayList<TradingDataAttribute> attributes;
-    private Date startingDate;
-    private Date endDate;
     private int numOfRows;
 
     public DataRetriever(String symbol, ArrayList<TradingDataAttribute> attributes){
@@ -62,8 +60,8 @@ public class DataRetriever {
 
             Date[] dateRange = companyStockTransactionsData.getDataDaysRange(CompanyStockTransactionsData.DataType.OHLC,
                     symbol);
-            startingDate = dateRange[0];
-            endDate = dateRange[1];
+            Date startingDate = dateRange[0];
+            Date endDate = dateRange[1];
 
             stockTradingData = companyStockTransactionsData.getTradingData(CompanyStockTransactionsData.DataType.OHLC,
                     symbol,startingDate,endDate,numOfRows,attributes);
