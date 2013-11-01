@@ -42,7 +42,6 @@ public class DataManager {
     private HashMap<TradingDataAttribute,String> tradingValues;
     private Set<Date> dates;
     private ArrayList<TradingDataAttribute> tradingDataAttributes;
-    private TradingDataAttribute predictingAttribute = TradingDataAttribute.CLOSING_PRICE;         //ToDO
 
     private double marketData [][];
     private double normalizedData [][];
@@ -52,23 +51,26 @@ public class DataManager {
     private String symbol;
 
     public DataManager(String stockID,NNTrainer nnTrainer,ArrayList<TradingDataAttribute> inputParameters){
+
          this.nnTrainer = nnTrainer;
-         dataRetriever = new DataRetriever(stockID,inputParameters);
+         this.dataRetriever = new DataRetriever(stockID,inputParameters);
+
+         stockTradingData = dataRetriever.getTrainingData();
+         tradingData = stockTradingData.getTradingData();
+         dates = stockTradingData.getDates();
+
+         tradingDataAttributes = stockTradingData.getAttributes();
+         symbol = stockTradingData.getStockId();                                         //Data retrieved only once
     }
 
-    public void prepareData(){
-        stockTradingData = dataRetriever.getTrainingData();
-        tradingData = stockTradingData.getTradingData();
-        dates = stockTradingData.getDates();
+    public void prepareData(TradingDataAttribute predictingAttribute){
 
-        tradingDataAttributes = stockTradingData.getAttributes();
-        symbol = stockTradingData.getStockId();
 
-        prepareTradingData();
+        prepareTradingData(predictingAttribute);
 
     }
 
-    private void prepareTradingData(){
+    private void prepareTradingData(TradingDataAttribute predictingAttribute){
 
         //iterate dates and get data
         int i = 0;
@@ -97,7 +99,6 @@ public class DataManager {
 
         dataNormalizer = new DataNormalizer();
         dataNormalizer.setSymbol(symbol);
-        tradingDataAttributes.add(TradingDataAttribute.CLOSING_PRICE);
         normalizedData = dataNormalizer.getNormalizedData(preprocessedData,tradingDataAttributes);
 
         int normalizedDataRowCount = normalizedData.length;
@@ -118,6 +119,7 @@ public class DataManager {
         }
 
         nnTrainer.setTrainingData(inputData,idealData);
+        nnTrainer.setPredictingAttribute(predictingAttribute);
 
     }
 

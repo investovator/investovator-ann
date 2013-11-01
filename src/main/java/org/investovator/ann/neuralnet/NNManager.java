@@ -33,7 +33,7 @@ import java.util.HashMap;
  */
 public class NNManager {
 
-    final int iterationCount = 10000;
+    final int iterationCount = 100000;
     final double error = 0.001;
 
     private HashMap<String,String> newParameters;
@@ -66,11 +66,20 @@ public class NNManager {
         nnTrainer = new NNTrainer();
         dataManager = new DataManager(stockID,nnTrainer,inputParameters);
 
-        BasicNetwork network = nnCreator.createNetwork();
-        dataManager.prepareData();
+        int inputParameterCount = inputParameters.size();
+
         nnTrainer.setIterationCount(iterationCount);
         nnTrainer.setError(error);
-        status = nnTrainer.TrainANN(network,stockID);
+
+       // for(int i = 0;i < inputParameterCount; i++){
+
+            BasicNetwork network = nnCreator.createNetwork();
+            dataManager.prepareData(TradingDataAttribute.CLOSING_PRICE);            //specifies predicting attribute
+            status = nnTrainer.TrainANN(network,stockID);
+
+      //  }
+
+
 
         return status;
     }

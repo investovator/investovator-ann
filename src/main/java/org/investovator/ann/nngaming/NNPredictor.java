@@ -33,6 +33,7 @@ import java.util.Date;
 public class NNPredictor {
 
     private BasicNetwork network;
+    private TradingDataAttribute predictingAttribute;
 
     public NNPredictor(){
 
@@ -40,12 +41,14 @@ public class NNPredictor {
 
     private void loadNeuralNetworkModel(String stockID){
 
-        network = (BasicNetwork) EncogDirectoryPersistence.loadObject(new File("resources/"+stockID+"/"+stockID));
+        network = (BasicNetwork) EncogDirectoryPersistence.loadObject(new File("resources/"
+                +stockID+"/"+stockID+"_"+predictingAttribute));
 
     }
 
     public double getPredictedValue(String stockID, Date date, TradingDataAttribute attribute){   //remove date
 
+        this.predictingAttribute = attribute;
         DataNormalizer dataNormalizer = new DataNormalizer();
         dataNormalizer.setSymbol(stockID);
         loadNeuralNetworkModel(stockID);

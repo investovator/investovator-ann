@@ -44,7 +44,7 @@ public class DataNormalizer {
 
         double [][] normalizedData = new double[rowCount][columnCount];
 
-        /*temporary min-max*/
+        /* min-max */
         for (int j = 0; j < columnCount; j++) {
 
             NormalizationModel model = new NormalizationModel();
