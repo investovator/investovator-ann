@@ -17,8 +17,6 @@
  */
 package org.investovator.ann.neuralnet;
 
-import org.encog.engine.network.activation.ActivationLinear;
-import org.encog.engine.network.activation.ActivationSigmoid;
 import org.encog.engine.network.activation.ActivationTANH;
 import org.encog.neural.networks.BasicNetwork;
 import org.encog.neural.networks.layers.BasicLayer;
@@ -42,11 +40,11 @@ public class NNCreator {
     public BasicNetwork createNetwork(){
 
         BasicNetwork network = new BasicNetwork();
-        int hiddenLayerNeuronCount = 10;
+        int hiddenLayerNeuronCount = 12;
 
-        network.addLayer(new BasicLayer(new ActivationLinear(), true,inputParameterCount));
-        network.addLayer(new BasicLayer(new ActivationSigmoid(), true,hiddenLayerNeuronCount));
-        network.addLayer(new BasicLayer(new ActivationTANH(), false,outputParameterCount));
+        network.addLayer(new BasicLayer(new ActivationTANH(), true,inputParameterCount));
+        network.addLayer(new BasicLayer(new ActivationTANH(), true,hiddenLayerNeuronCount));
+        network.addLayer(new BasicLayer(new ActivationTANH(), true,outputParameterCount));
         network.getStructure().finalizeStructure();
         network.reset();
         return network;

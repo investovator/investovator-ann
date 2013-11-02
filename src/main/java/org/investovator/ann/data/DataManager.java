@@ -104,12 +104,12 @@ public class DataManager {
         int normalizedDataRowCount = normalizedData.length;
         int normalizedDataColCount = normalizedData[0].length;
 
-        inputData = new double[normalizedDataRowCount][normalizedDataColCount];
+        inputData = new double[normalizedDataRowCount][normalizedDataColCount - 1];
         idealData = new double[normalizedDataRowCount][1];
 
         for(int j = 0; j < normalizedDataRowCount; j++){
 
-            for(int k = 0; k < normalizedDataColCount; k++){
+            for(int k = 0; k < normalizedDataColCount - 1; k++){
                 inputData[j][k] = normalizedData[j][k];
 
             }

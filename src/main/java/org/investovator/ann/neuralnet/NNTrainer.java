@@ -19,6 +19,8 @@
 package org.investovator.ann.neuralnet;
 
 import org.encog.ml.train.MLTrain;
+import org.encog.ml.train.strategy.ResetStrategy;
+import org.encog.ml.train.strategy.StopTrainingStrategy;
 import org.encog.neural.data.NeuralDataSet;
 import org.encog.neural.data.basic.BasicNeuralDataSet;
 import org.encog.neural.networks.BasicNetwork;
@@ -53,6 +55,12 @@ public class NNTrainer {
         // train the neural network
         final MLTrain train = new ResilientPropagation(network, trainingSet);
 
+        ResetStrategy resetStrategy = new ResetStrategy(0.001,10000);
+        StopTrainingStrategy stopTrainingStrategy = new StopTrainingStrategy(0.004,10000);
+
+        train.addStrategy(resetStrategy);
+        train.addStrategy(stopTrainingStrategy);
+
         do
         {
             train.iteration();
@@ -66,9 +74,7 @@ public class NNTrainer {
         double e = network.calculateError(trainingSet);
         System.out.println("Network trained to error: " + e);
 
-        if(trainingSucceeded){
-            saveNetwork(stockID,network);
-        }
+        saveNetwork(stockID,network);
 
         return trainingSucceeded;
     }

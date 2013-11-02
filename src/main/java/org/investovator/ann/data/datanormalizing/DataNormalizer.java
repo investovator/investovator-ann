@@ -68,7 +68,7 @@ public class DataNormalizer {
             model.setOldMax(max);
             model.setOldMin(min);
 
-            if(j < columnCount - 1)
+            if(j < (columnCount - 1))
                 serializer.saveModel(model, String.valueOf(attributes.get(j)), symbol);
 
 
@@ -77,7 +77,9 @@ public class DataNormalizer {
                 normalizedData[i][j] = getNormalizedValue(dataArray[i][j]);
 
             }
-            System.out.println(normalizedData[6][j]);
+
+            System.out.println(normalizedData[7][j]);
+
         }
 
         return normalizedData;
