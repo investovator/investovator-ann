@@ -63,12 +63,35 @@ public class DataRetriever {
 
 
         } catch (DataNotFoundException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            e.printStackTrace();
         } catch (DataAccessException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            e.printStackTrace();
         }
 
         return stockTradingData;
     }
 
+    public StockTradingData getGamingData(String symbol, ArrayList<TradingDataAttribute> attributes){
+
+        CompanyStockTransactionsData companyStockTransactionsData = new CompanyStockTransactionsDataImpl();
+        Date[] dateRange;
+        Date endDate;
+
+        try {
+            dateRange = companyStockTransactionsData.getDataDaysRange(CompanyStockTransactionsData.DataType.OHLC,
+                    symbol);
+            endDate = dateRange[1];
+
+            stockTradingData = companyStockTransactionsData.getTradingData(CompanyStockTransactionsData.DataType.OHLC,
+                    symbol,endDate,endDate,1,attributes);
+
+        } catch (DataNotFoundException e) {
+            e.printStackTrace();
+        } catch (DataAccessException e) {
+            e.printStackTrace();
+        }
+
+        return stockTradingData;
+
+    }
 }
