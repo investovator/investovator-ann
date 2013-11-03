@@ -78,7 +78,7 @@ public class DataNormalizer {
 
             }
 
-            System.out.println(normalizedData[7][j]);
+            System.out.println(normalizedData[6][j]);
 
         }
 

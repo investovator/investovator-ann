@@ -34,28 +34,22 @@ import java.util.Date;
  */
 public class DataRetriever {
 
-    private CompanyStockTransactionsDataImpl companyStockTransactionsData;
     private StockTradingData stockTradingData;
 
-    private String symbol;
     private ArrayList<TradingDataAttribute> attributes;
     private int numOfRows;
 
-    public DataRetriever(String symbol, ArrayList<TradingDataAttribute> attributes){
+    public DataRetriever(){
 
-        this.companyStockTransactionsData = new CompanyStockTransactionsDataImpl();
-        this.symbol = symbol;
         this.numOfRows = 720;
-        this.attributes = attributes;
+
     }
 
-    public StockTradingData getTrainingData(){
-        retrieveTrainingData();
 
-        return stockTradingData;
-    }
+    public StockTradingData retrieveTrainingData(String symbol, ArrayList<TradingDataAttribute> attributes){
 
-    private void retrieveTrainingData(){
+        CompanyStockTransactionsDataImpl companyStockTransactionsData = new CompanyStockTransactionsDataImpl();
+
         try {
 
             Date[] dateRange = companyStockTransactionsData.getDataDaysRange(CompanyStockTransactionsData.DataType.OHLC,
@@ -67,10 +61,14 @@ public class DataRetriever {
                     symbol,startingDate,endDate,numOfRows,attributes);
 
 
+
         } catch (DataNotFoundException e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         } catch (DataAccessException e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }
+
+        return stockTradingData;
     }
+
 }

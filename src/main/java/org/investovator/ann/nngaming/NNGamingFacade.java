@@ -18,32 +18,21 @@
 
 package org.investovator.ann.nngaming;
 
-import java.util.Random;
+import java.util.ArrayList;
 
 /**
  * @author: Hasala Surasinghe
  * @version: ${Revision}
  */
-public class BidGenerator {
-
-    private Random random = new Random();
-    private double sampleSpread = 2;
-    private int range = 2;
-
-    public void generateSellOrders(double closingPrice){
-
-        for (int i = 0; i < 5; i++) {
-            System.out.println(closingPrice-sampleSpread/2 - random.nextFloat()*range);
-        }
-
-    }
-
-    public void generateBuyOrders(double closingPrice){
+public class NNGamingFacade {
 
 
-        for (int i = 0; i < 5; i++) {
-            System.out.println(closingPrice+sampleSpread/2 + random.nextFloat()*range);
-        }
+    private NNPredictor nnPredictor;
+    private BidGenerator bidGenerator;
 
+    public ArrayList<Float> getGeneratedBids(int buyOrderCount, int sellOrderCount){
+
+
+        return new ArrayList<Float>();
     }
 }

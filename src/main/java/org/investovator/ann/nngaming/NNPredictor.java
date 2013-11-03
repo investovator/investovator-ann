@@ -24,7 +24,6 @@ import org.investovator.ann.data.datanormalizing.DataNormalizer;
 import org.investovator.core.data.api.utils.TradingDataAttribute;
 
 import java.io.File;
-import java.util.Date;
 
 /**
  * @author: Hasala Surasinghe
@@ -46,7 +45,7 @@ public class NNPredictor {
 
     }
 
-    public double getPredictedValue(String stockID, Date date, TradingDataAttribute attribute){   //remove date
+    public double getPredictedValue(String stockID, TradingDataAttribute attribute){   //remove date
 
         this.predictingAttribute = attribute;
         DataNormalizer dataNormalizer = new DataNormalizer();
@@ -55,12 +54,12 @@ public class NNPredictor {
 
         double predictedPrice;
         double[][] dataArray;
-        double[] input = {0.17333166708322917,
-                0.1831357048748353,
-                0.18216244450248106,
-                7.456786987310164E-5,
-                0.0014641288433382138,
-                7.8727126144147E-5
+        double[] input = {0.18020494876280926,
+                0.18050065876152832,
+                0.18607991642726562,
+                0.01319851296753899,
+                0.0527086383601757,
+                0.013869213731226883
 
 
         };

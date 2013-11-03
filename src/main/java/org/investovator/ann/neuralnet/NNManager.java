@@ -34,7 +34,7 @@ import java.util.HashMap;
 public class NNManager {
 
     final int iterationCount = 10000;
-    final double error = 0.003;
+    final double error = 0.001;
 
     private HashMap<String,String> newParameters;
     private ArrayList<TradingDataAttribute> inputParameters;
@@ -74,7 +74,7 @@ public class NNManager {
        // for(int i = 0;i < inputParameterCount; i++){
 
             BasicNetwork network = nnCreator.createNetwork();
-            dataManager.prepareData(TradingDataAttribute.TRADES);            //specifies predicting attribute
+            dataManager.prepareData(TradingDataAttribute.CLOSING_PRICE);            //specifies predicting attribute
             status = nnTrainer.TrainANN(network,stockID);
 
       //  }

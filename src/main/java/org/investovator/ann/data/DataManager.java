@@ -53,9 +53,9 @@ public class DataManager {
     public DataManager(String stockID,NNTrainer nnTrainer,ArrayList<TradingDataAttribute> inputParameters){
 
          this.nnTrainer = nnTrainer;
-         this.dataRetriever = new DataRetriever(stockID,inputParameters);
+         this.dataRetriever = new DataRetriever();
 
-         stockTradingData = dataRetriever.getTrainingData();
+         stockTradingData = dataRetriever.retrieveTrainingData(stockID,inputParameters);
          tradingData = stockTradingData.getTradingData();
          dates = stockTradingData.getDates();
 
