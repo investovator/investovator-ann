@@ -36,8 +36,8 @@ public class DataRetriever {
 
     private StockTradingData stockTradingData;
 
-    private ArrayList<TradingDataAttribute> attributes;
     private int numOfRows;
+    private double[] gameData;
 
     public DataRetriever(){
 
@@ -71,7 +71,7 @@ public class DataRetriever {
         return stockTradingData;
     }
 
-    public StockTradingData getGamingData(String symbol, ArrayList<TradingDataAttribute> attributes){
+    public double[] getGamingData(String symbol, ArrayList<TradingDataAttribute> attributes){
 
         CompanyStockTransactionsData companyStockTransactionsData = new CompanyStockTransactionsDataImpl();
         Date[] dateRange;
@@ -85,13 +85,23 @@ public class DataRetriever {
             stockTradingData = companyStockTransactionsData.getTradingData(CompanyStockTransactionsData.DataType.OHLC,
                     symbol,endDate,endDate,1,attributes);
 
+            int attributeCount = attributes.size();
+            gameData = new double[attributeCount];
+
+            for(int i = 0; i < attributeCount;i++){
+
+                gameData[i] = Double.parseDouble(stockTradingData.getTradingDataEntry(endDate).get(attributes.get(i)));
+                System.out.println(gameData[i]);
+
+            }
+
         } catch (DataNotFoundException e) {
             e.printStackTrace();
         } catch (DataAccessException e) {
             e.printStackTrace();
         }
 
-        return stockTradingData;
+        return gameData;
 
     }
 }

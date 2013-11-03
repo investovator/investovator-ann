@@ -48,8 +48,7 @@ public class NNPredictor {
     public double getPredictedValue(String stockID, TradingDataAttribute attribute){   //remove date
 
         this.predictingAttribute = attribute;
-        DataNormalizer dataNormalizer = new DataNormalizer();
-        dataNormalizer.setSymbol(stockID);
+        DataNormalizer dataNormalizer = new DataNormalizer(stockID);
         loadNeuralNetworkModel(stockID);
 
         double predictedPrice;

@@ -33,8 +33,14 @@ public class DataNormalizer {
 
     private double min = 0;
     private double max = 0;
-
     private String symbol;
+
+    public DataNormalizer(String symbol){
+
+        this.symbol = symbol;
+
+    }
+
 
     public double[][] getNormalizedData(double [][] dataArray,ArrayList<TradingDataAttribute> attributes){
 
@@ -141,7 +147,4 @@ public class DataNormalizer {
         return model;
     }
 
-    public void setSymbol(String symbol) {
-        this.symbol = symbol;
-    }
 }

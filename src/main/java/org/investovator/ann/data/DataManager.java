@@ -54,30 +54,31 @@ public class DataManager {
 
          this.nnTrainer = nnTrainer;
          this.dataRetriever = new DataRetriever();
+         this.tradingDataAttributes = inputParameters;
+         this.symbol = stockID;
 
-         stockTradingData = dataRetriever.retrieveTrainingData(stockID,inputParameters);
-         tradingData = stockTradingData.getTradingData();
-         dates = stockTradingData.getDates();
+         retrieveData();
+                                                 //Data retrieved only once
+    }
 
-         tradingDataAttributes = stockTradingData.getAttributes();
-         symbol = stockTradingData.getStockId();                                         //Data retrieved only once
+    private void retrieveData(){
+
+        stockTradingData = dataRetriever.retrieveTrainingData(symbol, tradingDataAttributes);
+        tradingData = stockTradingData.getTradingData();
+        dates = stockTradingData.getDates();
+
+        tradingDataAttributes = stockTradingData.getAttributes();
+
     }
 
     public void prepareData(TradingDataAttribute predictingAttribute){
-
-
-        prepareTradingData(predictingAttribute);
-
-    }
-
-    private void prepareTradingData(TradingDataAttribute predictingAttribute){
 
         //iterate dates and get data
         int i = 0;
         int tradingAttributeCount = tradingDataAttributes.size();
         int rowCount = dates.size();
-        int colCount = tradingDataAttributes.size();
-        marketData = new double[rowCount][colCount];
+
+        marketData = new double[rowCount][tradingAttributeCount];
 
         for (Iterator<Date> iterator = dates.iterator(); iterator.hasNext();) {
             Date next = iterator.next();
@@ -97,8 +98,7 @@ public class DataManager {
         preprocessedData = dataPreprocessor.preProcessData(marketData,tradingDataAttributes,predictingAttribute);
 
 
-        dataNormalizer = new DataNormalizer();
-        dataNormalizer.setSymbol(symbol);
+        dataNormalizer = new DataNormalizer(symbol);
         normalizedData = dataNormalizer.getNormalizedData(preprocessedData,tradingDataAttributes);
 
         int normalizedDataRowCount = normalizedData.length;
