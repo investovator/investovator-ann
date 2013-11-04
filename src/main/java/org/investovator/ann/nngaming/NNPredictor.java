@@ -45,36 +45,21 @@ public class NNPredictor {
 
     }
 
-    public double getPredictedValue(String stockID, TradingDataAttribute attribute){   //remove date
+    public double getPredictedValue(String stockID, TradingDataAttribute attribute, double[] inputData){
 
         this.predictingAttribute = attribute;
+        double[] outputArr = new double[1];
+        double predictedValue;
+
         DataNormalizer dataNormalizer = new DataNormalizer(stockID);
         loadNeuralNetworkModel(stockID);
 
-        double predictedPrice;
-        double[][] dataArray;
-        double[] input = {0.18020494876280926,
-                0.18050065876152832,
-                0.18607991642726562,
-                0.01319851296753899,
-                0.0527086383601757,
-                0.013869213731226883
+        network.compute(inputData, outputArr);
 
+        predictedValue = dataNormalizer.getDenormalizedValue(outputArr[0], attribute);
 
-        };
-
-
-       /* for(int j = 0;j < dataArray[0].length - 1; j++){
-            input[j] =  dataNormalizer.getNormalizedValue(dataArray[0][j],types[j]);
-        }*/
-        double [] outputArr = new double[1];
-
-        network.compute(input, outputArr);
-
-        outputArr[0] = dataNormalizer.getDenormalizedValue(outputArr[0], attribute);
-
-        System.out.println(outputArr[0]);
-        return outputArr[0];
+        //System.out.println(predictedValue);
+        return predictedValue;
 
     }
 }

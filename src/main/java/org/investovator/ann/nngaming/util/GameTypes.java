@@ -16,41 +16,26 @@
  *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.investovator.ann.nngaming;
-
-import org.investovator.ann.nngaming.util.GameTypes;
-
-import java.util.ArrayList;
+package org.investovator.ann.nngaming.util;
 
 /**
  * @author: Hasala Surasinghe
  * @version: ${Revision}
  */
-public class NNGamingFacade {
+public enum GameTypes {
 
-    private NNPredictor nnPredictor;
-    private BidGenerator bidGenerator;
-    private PredictionValueManager predictionValueManager;
-    private float[] predictedValues;
-
-    public NNGamingFacade(GameTypes gameType){
-
-         if(gameType == GameTypes.TRADING_GAME){
-
-             predictionValueManager = new PredictionValueManager();
-             //predictedValues = predictionValueManager.getAllPredictionValues(stockID);
-
-         }
-         else{
-
-         }
-    }
+    TRADING_GAME,
+    PREDICTION_GAME;
 
 
-    public ArrayList<Float> getGeneratedBids(int buyOrderCount, int sellOrderCount, String stockID){
+    public static String getGameType(GameTypes gameType) {
 
-
-
-        return new ArrayList<Float>();
+        switch (gameType) {
+            case TRADING_GAME:
+                return "Trading Game";
+            case PREDICTION_GAME:
+                return "Prediction Game";
+        }
+        return null;
     }
 }

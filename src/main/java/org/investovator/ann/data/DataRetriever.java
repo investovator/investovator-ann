@@ -91,7 +91,6 @@ public class DataRetriever {
             for(int i = 0; i < attributeCount;i++){
 
                 gameData[i] = Double.parseDouble(stockTradingData.getTradingDataEntry(endDate).get(attributes.get(i)));
-                System.out.println(gameData[i]);
 
             }
 

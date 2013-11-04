@@ -57,8 +57,8 @@ public class DataManager {
          this.tradingDataAttributes = inputParameters;
          this.symbol = stockID;
 
-         retrieveData();
-                                                 //Data retrieved only once
+         retrieveData();       //Data retrieved only once for NNTraining
+
     }
 
     private void retrieveData(){
@@ -78,6 +78,7 @@ public class DataManager {
         int tradingAttributeCount = tradingDataAttributes.size();
         int rowCount = dates.size();
 
+        //Prepare Data Set
         marketData = new double[rowCount][tradingAttributeCount];
 
         for (Iterator<Date> iterator = dates.iterator(); iterator.hasNext();) {
@@ -94,10 +95,11 @@ public class DataManager {
             i++;
         }
 
+        //Pre-process Data Set
         dataPreprocessor = new DataPreprocessor();
         preprocessedData = dataPreprocessor.preProcessData(marketData,tradingDataAttributes,predictingAttribute);
 
-
+        //Normalizing Data Set
         dataNormalizer = new DataNormalizer(symbol);
         normalizedData = dataNormalizer.getNormalizedData(preprocessedData,tradingDataAttributes);
 
@@ -118,6 +120,7 @@ public class DataManager {
 
         }
 
+        //Passing Data Set to NNTrainer
         nnTrainer.setTrainingData(inputData,idealData);
         nnTrainer.setPredictingAttribute(predictingAttribute);
 
