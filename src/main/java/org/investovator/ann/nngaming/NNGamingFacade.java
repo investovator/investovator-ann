@@ -32,13 +32,14 @@ public class NNGamingFacade {
     private BidGenerator bidGenerator;
     private PredictionValueManager predictionValueManager;
     private float[] predictedValues;
+    private ArrayList<Float> generatedBids;
 
     public NNGamingFacade(GameTypes gameType){
 
          if(gameType == GameTypes.TRADING_GAME){
 
-             predictionValueManager = new PredictionValueManager();
-             //predictedValues = predictionValueManager.getAllPredictionValues(stockID);
+              bidGenerator = new BidGenerator();
+              generatedBids = new ArrayList<>();
 
          }
          else{
@@ -47,10 +48,17 @@ public class NNGamingFacade {
     }
 
 
-    public ArrayList<Float> getGeneratedBids(int buyOrderCount, int sellOrderCount, String stockID){
+    public ArrayList<Float> getGeneratedOrders(int buyOrderCount, int sellOrderCount, String stockID, int currentDay){
 
+        if(predictedValues == null){
 
+            predictionValueManager = new PredictionValueManager(stockID);
+            predictedValues = predictionValueManager.getAllPredictionValues();
 
-        return new ArrayList<Float>();
+        }
+
+        generatedBids = bidGenerator.getOrders(predictedValues[currentDay - 1],buyOrderCount,sellOrderCount);
+
+        return generatedBids;
     }
 }

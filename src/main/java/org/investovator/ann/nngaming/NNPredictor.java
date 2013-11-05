@@ -58,7 +58,6 @@ public class NNPredictor {
 
         predictedValue = dataNormalizer.getDenormalizedValue(outputArr[0], attribute);
 
-        //System.out.println(predictedValue);
         return predictedValue;
 
     }

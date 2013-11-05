@@ -18,6 +18,7 @@
 
 package org.investovator.ann.nngaming;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 /**
@@ -27,23 +28,45 @@ import java.util.Random;
 public class BidGenerator {
 
     private Random random = new Random();
-    private double sampleSpread = 2;
+    private float sampleSpread = 2;
     private int range = 2;
+    private ArrayList<Float> orders;
 
-    public void generateSellOrders(double closingPrice){
+    public BidGenerator(){
 
-        for (int i = 0; i < 5; i++) {
-            System.out.println(closingPrice-sampleSpread/2 - random.nextFloat()*range);
+        orders = new ArrayList<>();
+
+    }
+
+    private void generateSellOrders(double closingPrice, int sellOrderCount){
+
+        for (int i = 0; i < sellOrderCount; i++) {
+
+            float order = (float) (closingPrice-sampleSpread/2 - random.nextFloat()*range);
+            orders.add(order);
+
         }
 
     }
 
-    public void generateBuyOrders(double closingPrice){
+    private void generateBuyOrders(double closingPrice, int buyOrderCount){
 
 
-        for (int i = 0; i < 5; i++) {
-            System.out.println(closingPrice+sampleSpread/2 + random.nextFloat()*range);
+        for (int i = 0; i < buyOrderCount; i++) {
+
+            float order = (float) (closingPrice+sampleSpread/2 + random.nextFloat()*range);
+            orders.add(order);
+
         }
+
+    }
+
+    public ArrayList<Float> getOrders(double closingPrice, int sellOrderCount, int buyOrderCount){
+
+        generateSellOrders(closingPrice, sellOrderCount);
+        generateBuyOrders(closingPrice, buyOrderCount);
+
+        return orders;
 
     }
 }

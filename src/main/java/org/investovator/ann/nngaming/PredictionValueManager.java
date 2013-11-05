@@ -38,9 +38,9 @@ public class PredictionValueManager {
     private DataNormalizer dataNormalizer;
     private String stockID;
 
-    public PredictionValueManager(){
-
-        this.numOfDays = 5;
+    public PredictionValueManager(String stockID){
+        this.stockID = stockID;
+        this.numOfDays = 5;                         //todo
         this.nnPredictor = new NNPredictor();
         this.predictedValues = new float[numOfDays];
         this.attributes = new ArrayList<>();
@@ -53,9 +53,7 @@ public class PredictionValueManager {
 
     }
 
-    public float[] getAllPredictionValues(String stockID){
-
-        this.stockID = stockID;
+    public float[] getAllPredictionValues(){
 
         DataRetriever dataRetriever = new DataRetriever();
         inputData = dataRetriever.getGamingData(stockID,attributes);
@@ -89,7 +87,7 @@ public class PredictionValueManager {
 
     private void normalizeData(){
 
-        dataNormalizer = new DataNormalizer(stockID);;
+        dataNormalizer = new DataNormalizer(stockID);
 
         for(int i = 0;i < inputData.length; i++){
 
