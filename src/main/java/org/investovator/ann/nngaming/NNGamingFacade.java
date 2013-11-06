@@ -41,6 +41,7 @@ public class NNGamingFacade {
               bidGenerator = new BidGenerator();
               generatedBids = new ArrayList<>();
 
+
          }
          else{
 
@@ -49,6 +50,11 @@ public class NNGamingFacade {
 
 
     public ArrayList<Float> getGeneratedOrders(int buyOrderCount, int sellOrderCount, String stockID, int currentDay){
+        System.setProperty("org.investovator.core.data.cassandra.url", "localhost:9160" );
+        System.setProperty("org.investovator.core.data.cassandra.username", "admin" );
+        System.setProperty("org.investovator.core.data.cassandra.password", "admin" );
+
+
 
         if(predictedValues == null){
 
