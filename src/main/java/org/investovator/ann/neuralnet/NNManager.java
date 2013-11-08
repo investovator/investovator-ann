@@ -57,6 +57,7 @@ public class NNManager {
         this.inputParameters = inputParameters;
         this.stockID = stockID;
         this.inputParamCount = inputParameters.size();
+        this.inputParamCount = 6;
         status = false;
     }
 

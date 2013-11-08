@@ -20,6 +20,7 @@ package org.investovator.ann.nngaming;
 
 import org.encog.neural.networks.BasicNetwork;
 import org.encog.persist.EncogDirectoryPersistence;
+import org.investovator.ann.config.ConfigReceiver;
 import org.investovator.ann.data.datanormalizing.DataNormalizer;
 import org.investovator.core.data.api.utils.TradingDataAttribute;
 
@@ -33,14 +34,17 @@ public class NNPredictor {
 
     private BasicNetwork network;
     private TradingDataAttribute predictingAttribute;
+    private String basePath;
 
     public NNPredictor(){
+
+        this.basePath = ConfigReceiver.getBasePath();
 
     }
 
     private void loadNeuralNetworkModel(String stockID){
 
-        network = (BasicNetwork) EncogDirectoryPersistence.loadObject(new File("resources/"
+        network = (BasicNetwork) EncogDirectoryPersistence.loadObject(new File(basePath+"/resources/"
                 +stockID+"/"+stockID+"_"+predictingAttribute));
 
     }

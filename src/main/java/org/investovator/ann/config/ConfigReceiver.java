@@ -24,9 +24,9 @@ package org.investovator.ann.config;
  */
 public class ConfigReceiver {
 
-    private String basePath;
+    private static String basePath;
 
-    public String getBasePath() {
+    public static String getBasePath() {
         return basePath;
     }
 

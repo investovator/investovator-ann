@@ -18,6 +18,8 @@
 
 package org.investovator.ann.data.datanormalizing;
 
+import org.investovator.ann.config.ConfigReceiver;
+
 import java.io.*;
 
 /**
@@ -27,8 +29,12 @@ import java.io.*;
 public class NormalizationModelSerializer {
 
     private NormalizationModel normalizationModel;
+    private String basePath;
 
     public NormalizationModelSerializer(){
+
+        this.basePath = ConfigReceiver.getBasePath();
+
     }
 
     public void saveModel(NormalizationModel model, String fileName, String symbol){
@@ -38,7 +44,7 @@ public class NormalizationModelSerializer {
         ObjectOutputStream out;
         try {
 
-            File modelSavePath = new File("resources/"+symbol);
+            File modelSavePath = new File(basePath+"/resources/"+symbol);
 
             if (!modelSavePath.exists())
                 modelSavePath.mkdirs();
@@ -60,7 +66,7 @@ public class NormalizationModelSerializer {
         FileInputStream fis;
         ObjectInputStream in;
         try {
-            fis = new FileInputStream("resources/"+symbol+"/"+fileName);
+            fis = new FileInputStream(basePath+"/resources/"+symbol+"/"+fileName);
             in = new ObjectInputStream(fis);
             normalizationModel = (NormalizationModel) in.readObject();
             in.close();

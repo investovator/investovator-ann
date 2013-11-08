@@ -26,6 +26,7 @@ import org.encog.neural.data.basic.BasicNeuralDataSet;
 import org.encog.neural.networks.BasicNetwork;
 import org.encog.neural.networks.training.propagation.resilient.ResilientPropagation;
 import org.encog.persist.EncogDirectoryPersistence;
+import org.investovator.ann.config.ConfigReceiver;
 import org.investovator.core.data.api.utils.TradingDataAttribute;
 
 import java.io.File;
@@ -44,9 +45,11 @@ public class NNTrainer {
     private int iterationCount;
     private double error;
     private boolean trainingSucceeded;
+    private String basePath;
 
     public NNTrainer(){
         trainingSucceeded = true;
+        this.basePath = ConfigReceiver.getBasePath();
     }
 
     public boolean TrainANN(BasicNetwork network, String stockID){
@@ -82,7 +85,7 @@ public class NNTrainer {
     private void saveNetwork(String stockID,BasicNetwork network){
 
         System.out.println("Saving network");
-        EncogDirectoryPersistence.saveObject(new File("resources/"+stockID+"/"+stockID+"_"+predictingAttribute),
+        EncogDirectoryPersistence.saveObject(new File(basePath+"/resources/"+stockID+"/"+stockID+"_"+predictingAttribute),
                 network);
 
     }
