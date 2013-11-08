@@ -27,7 +27,7 @@ import org.encog.neural.networks.layers.BasicLayer;
  * @version: ${Revision}
  *
  */
-public class NNCreator {
+public class NNCreator implements NNCreatorInterface{
 
         final private int inputParameterCount;
         final private int outputParameterCount;
