@@ -72,13 +72,13 @@ public class NNManager {
         nnTrainer.setIterationCount(iterationCount);
         nnTrainer.setError(error);
 
-       // for(int i = 0;i < inputParameterCount; i++){
+        for(int i = 0;i < inputParameterCount; i++){
 
             BasicNetwork network = nnCreator.createNetwork();
-            dataManager.prepareData(TradingDataAttribute.CLOSING_PRICE);            //specifies predicting attribute
+            dataManager.prepareData(inputParameters.get(i));            //specifies predicting attribute
             status = nnTrainer.TrainANN(network,stockID);
 
-      //  }
+       }
 
 
 
