@@ -36,12 +36,11 @@ public class DataRetriever {
 
     private StockTradingData stockTradingData;
 
-    private int numOfRows;
+    private int NUM_OF_ROWS = 10000;
     private double[] gameData;
 
     public DataRetriever(){
 
-        this.numOfRows = 720;
 
     }
 
@@ -58,7 +57,7 @@ public class DataRetriever {
             Date endDate = dateRange[1];
 
             stockTradingData = companyStockTransactionsData.getTradingData(CompanyStockTransactionsData.DataType.OHLC,
-                    symbol,startingDate,endDate,numOfRows,attributes);
+                    symbol,startingDate,endDate,NUM_OF_ROWS,attributes);
 
 
 
