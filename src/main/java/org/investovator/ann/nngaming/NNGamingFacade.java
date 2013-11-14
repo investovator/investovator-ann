@@ -18,8 +18,6 @@
 
 package org.investovator.ann.nngaming;
 
-import org.investovator.ann.nngaming.util.GameTypes;
-
 import java.util.ArrayList;
 
 /**
@@ -34,9 +32,11 @@ public class NNGamingFacade {
     private float[] predictedValues;
     private ArrayList<Float> generatedBids;
 
-    public NNGamingFacade(GameTypes gameType){
+    private static NNGamingFacade instance;
 
-         if(gameType == GameTypes.TRADING_GAME){
+    public NNGamingFacade(){
+
+         /*if(gameType == GameTypes.TRADING_GAME){
 
               bidGenerator = new BidGenerator();
               generatedBids = new ArrayList<>();
@@ -45,7 +45,17 @@ public class NNGamingFacade {
          }
          else{
 
-         }
+         }*/
+    }
+
+    public static NNGamingFacade getInstance() {
+        if(instance == null){
+            synchronized(NNGamingFacade.class){
+                if(instance == null)
+                    instance = new NNGamingFacade();
+            }
+        }
+        return instance;
     }
 
 

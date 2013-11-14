@@ -60,7 +60,6 @@ public class DataRetriever {
                     symbol,startingDate,endDate,NUM_OF_ROWS,attributes);
 
 
-
         } catch (DataNotFoundException e) {
             e.printStackTrace();
         } catch (DataAccessException e) {
