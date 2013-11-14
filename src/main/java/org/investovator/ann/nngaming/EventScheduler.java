@@ -71,7 +71,7 @@ public class EventScheduler extends Thread {
     @Override
     public void run() {
 
-        service.scheduleWithFixedDelay(dayChange,0,DAY_LENGTH, TimeUnit.SECONDS);
+        service.scheduleWithFixedDelay(dayChange,10,DAY_LENGTH, TimeUnit.SECONDS);
         service.scheduleWithFixedDelay(bidAdd,0,BID_ADD_PERIOD,TimeUnit.SECONDS);
 
     }

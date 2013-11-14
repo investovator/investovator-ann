@@ -18,18 +18,13 @@
 
 package org.investovator.ann.nngaming;
 
-import org.investovator.ann.nngaming.events.AddBidEvent;
-import org.investovator.ann.nngaming.events.DayChangedEvent;
-
 import java.util.ArrayList;
-import java.util.Observable;
-import java.util.Observer;
 
 /**
  * @author: Hasala Surasinghe
  * @version: ${Revision}
  */
-public class NNGamingFacade implements Observer {
+public class NNGamingFacade {
 
     private NNPredictor nnPredictor;
     private BidGenerator bidGenerator;
@@ -80,15 +75,4 @@ public class NNGamingFacade implements Observer {
         return generatedBids;
     }
 
-    @Override
-    public void update(Observable o, Object arg) {
-
-        if(arg instanceof DayChangedEvent){
-            System.out.println("DayChangedObserved");
-        }
-        if(arg instanceof AddBidEvent){
-            System.out.println("AddBidObserved");
-        }
-
-    }
 }
