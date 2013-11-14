@@ -18,6 +18,8 @@
 
 package org.investovator.ann.nngaming;
 
+import org.investovator.ann.nngaming.events.Event;
+
 import java.util.Observable;
 
 /**
@@ -26,22 +28,33 @@ import java.util.Observable;
  */
 public class MarketEventReceiver extends Observable {
 
-    private String watchedValue;
+    private static MarketEventReceiver instance;
+    private Event event;
 
-    public MarketEventReceiver(String value) {
-        watchedValue = value;
+    public MarketEventReceiver() {
+        event = new Event();
     }
 
-    public void setValue(String value) {
+    public static MarketEventReceiver getInstance() {
+        if(instance == null){
+            synchronized(EventScheduler.class){
+                if(instance == null)
+                    instance = new MarketEventReceiver();
+            }
+        }
+        return instance;
+    }
+
+    public void setValue(Event newEvent) {
         // if value has changed notify observers
-        if(!watchedValue.equals(value)) {
-            System.out.println("Value changed to new value: "+value);
-            watchedValue = value;
+        if(!event.equals(newEvent)) {
+            //System.out.println("Value changed to new value: "+newEvent);
+            event = newEvent;
 
             // mark as value changed
             setChanged();
             // trigger notification
-            notifyObservers(value);
+            notifyObservers(newEvent);
         }
     }
 }

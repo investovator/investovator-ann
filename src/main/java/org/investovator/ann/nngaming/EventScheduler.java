@@ -18,6 +18,9 @@
 
 package org.investovator.ann.nngaming;
 
+import org.investovator.ann.nngaming.events.AddBidEvent;
+import org.investovator.ann.nngaming.events.DayChangedEvent;
+
 import java.util.TimerTask;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -33,19 +36,25 @@ public class EventScheduler extends Thread {
     private final int DAY_LENGTH = 10;
     private final int BID_ADD_PERIOD = 2;
     private static EventScheduler instance;
+    private MarketEventReceiver marketEventReceiver;
+
+    public EventScheduler(){
+
+        marketEventReceiver = MarketEventReceiver.getInstance();
+
+    }
 
     //Taking an instance of class contains your repeated method.
     TimerTask dayChange = new TimerTask() {
         @Override
         public void run() {
-            System.out.println("DayChange");
-
+            marketEventReceiver.setValue(new DayChangedEvent());
         }
     };
     TimerTask bidAdd = new TimerTask() {
         @Override
         public void run() {
-            System.out.println("BidAdd");
+            marketEventReceiver.setValue(new AddBidEvent());
         }
     };
 
