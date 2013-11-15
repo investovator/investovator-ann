@@ -46,6 +46,10 @@ public class NNGamingFacade {
          else{
 
          }*/
+
+        bidGenerator = new BidGenerator();
+        generatedBids = new ArrayList<>();
+
     }
 
     public static NNGamingFacade getInstance() {
@@ -63,7 +67,7 @@ public class NNGamingFacade {
 
 
 
-        if(predictedValues == null){
+        if(predictedValues == null){                      //only if predictions are not retrieved once
 
             predictionValueManager = new PredictionValueManager(stockID);
             predictedValues = predictionValueManager.getAllPredictionValues();
@@ -73,6 +77,18 @@ public class NNGamingFacade {
         generatedBids = bidGenerator.getOrders(predictedValues[currentDay - 1],buyOrderCount,sellOrderCount);
 
         return generatedBids;
+    }
+
+    public void startGame(){
+
+        EventScheduler.getInstance().start();
+
+    }
+
+    public void stopGame(){
+
+        EventScheduler.getInstance().stopService();
+
     }
 
 }
