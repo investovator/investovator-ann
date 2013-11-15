@@ -34,7 +34,7 @@ public class NNGamingFacade {
 
     private static NNGamingFacade instance;
 
-    public NNGamingFacade(){
+    private NNGamingFacade(){
 
          /*if(gameType == GameTypes.TRADING_GAME){
 

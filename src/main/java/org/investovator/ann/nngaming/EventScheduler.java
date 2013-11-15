@@ -38,7 +38,7 @@ public class EventScheduler extends Thread {
     private static EventScheduler instance;
     private MarketEventReceiver marketEventReceiver;
 
-    public EventScheduler(){
+    private EventScheduler(){
 
         marketEventReceiver = MarketEventReceiver.getInstance();
 

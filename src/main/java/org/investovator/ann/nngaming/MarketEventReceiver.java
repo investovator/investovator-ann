@@ -31,7 +31,7 @@ public class MarketEventReceiver extends Observable {
     private static MarketEventReceiver instance;
     private Event event;
 
-    public MarketEventReceiver() {
+    private MarketEventReceiver() {
         event = new Event();
     }
 
