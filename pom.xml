@@ -8,6 +8,13 @@
     <artifactId>investovator-ann</artifactId>
     <version>0.1</version>
 
+    <repositories>
+        <repository>
+            <id>investovator-mvn-repo</id>
+            <url>https://raw.github.com/investovator/investovator-mvn-repo/master/releases/</url>
+        </repository>
+    </repositories>
+
     <dependencies>
         <dependency>
             <groupId>org.investovator</groupId>
