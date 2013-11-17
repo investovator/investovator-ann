@@ -40,9 +40,11 @@ public class BidGenerator {
 
     private void generateSellOrders(double closingPrice, int sellOrderCount){
 
+
         for (int i = 0; i < sellOrderCount; i++) {
 
-            float order = (float) (closingPrice-sampleSpread/2 - random.nextFloat()*range);
+            float order = (float) ((closingPrice+sampleSpread/2) + (random.nextFloat()*range));
+            order = Float.valueOf(String.format("%.2f", order));
             orders.add(order);
 
         }
@@ -54,17 +56,19 @@ public class BidGenerator {
 
         for (int i = 0; i < buyOrderCount; i++) {
 
-            float order = (float) (closingPrice+sampleSpread/2 + random.nextFloat()*range);
+            float order = (float) (closingPrice- (sampleSpread/2) - (random.nextFloat()*range));
+            order = Float.valueOf(String.format("%.2f", order));
             orders.add(order);
 
         }
 
     }
 
-    public ArrayList<Float> getOrders(double closingPrice, int sellOrderCount, int buyOrderCount){
+    public ArrayList<Float> getOrders(double closingPrice, int buyOrderCount, int sellOrderCount){
 
-        generateSellOrders(closingPrice, sellOrderCount);
+        orders.clear();
         generateBuyOrders(closingPrice, buyOrderCount);
+        generateSellOrders(closingPrice, sellOrderCount);
 
         return orders;
 
