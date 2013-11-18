@@ -84,8 +84,6 @@ public class DataNormalizer {
 
             }
 
-            System.out.println(normalizedData[204][j]);
-
         }
 
         return normalizedData;

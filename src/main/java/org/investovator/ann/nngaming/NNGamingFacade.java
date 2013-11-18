@@ -18,7 +18,13 @@
 
 package org.investovator.ann.nngaming;
 
+import org.investovator.ann.data.DataRetriever;
+import org.investovator.core.data.api.utils.TradingDataAttribute;
+
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Set;
 
 /**
  * @author: Hasala Surasinghe
@@ -26,7 +32,6 @@ import java.util.ArrayList;
  */
 public class NNGamingFacade {
 
-    private NNPredictor nnPredictor;
     private BidGenerator bidGenerator;
     private PredictionValueManager predictionValueManager;
     private float[] predictedValues;
@@ -35,17 +40,6 @@ public class NNGamingFacade {
     private static NNGamingFacade instance;
 
     private NNGamingFacade(){
-
-         /*if(gameType == GameTypes.TRADING_GAME){
-
-              bidGenerator = new BidGenerator();
-              generatedBids = new ArrayList<>();
-
-
-         }
-         else{
-
-         }*/
 
         bidGenerator = new BidGenerator();
         generatedBids = new ArrayList<>();
@@ -67,7 +61,7 @@ public class NNGamingFacade {
 
 
 
-        if(predictedValues == null){                      //only if predictions are not retrieved once
+        if(predictedValues == null){                      //only predictions are retrieved once
 
             predictionValueManager = new PredictionValueManager(stockID);
             predictedValues = predictionValueManager.getAllPredictionValues();
@@ -88,6 +82,41 @@ public class NNGamingFacade {
     public void stopGame(){
 
         EventScheduler.getInstance().stopService();
+
+    }
+
+    //Data retrieval methods for graphical purposes
+
+    public HashMap<Date,String> getChartData(Date start, Date end, String stockID,
+                                             ArrayList<TradingDataAttribute> attributes){
+
+        DataRetriever dataRetriever = new DataRetriever();
+        HashMap<Date, String> chartData;
+
+        chartData = dataRetriever.getGraphData(start, end, stockID, attributes);
+
+        return chartData;
+    }
+
+    public Date[] getDateRange(String stockID){
+
+        DataRetriever dataRetriever = new DataRetriever();
+        Date[] dateRange;
+
+        dateRange = dataRetriever.getDateRange(stockID);
+
+        return dateRange;
+    }
+
+    public Set<Date> getDates(Date start, Date end, String stockID,
+                              ArrayList<TradingDataAttribute> attributes){
+
+        DataRetriever dataRetriever = new DataRetriever();
+        Set<Date> dates;
+
+        dates = dataRetriever.getDates(start, end, stockID, attributes);
+
+        return dates;
 
     }
 

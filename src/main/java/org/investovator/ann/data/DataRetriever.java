@@ -25,8 +25,7 @@ import org.investovator.core.data.api.utils.TradingDataAttribute;
 import org.investovator.core.data.exeptions.DataAccessException;
 import org.investovator.core.data.exeptions.DataNotFoundException;
 
-import java.util.ArrayList;
-import java.util.Date;
+import java.util.*;
 
 /**
  * @author: Hasala Surasinghe
@@ -58,7 +57,6 @@ public class DataRetriever {
 
             stockTradingData = companyStockTransactionsData.getTradingData(CompanyStockTransactionsData.DataType.OHLC,
                     symbol,startingDate,endDate,NUM_OF_ROWS,attributes);
-
 
         } catch (DataNotFoundException e) {
             e.printStackTrace();
@@ -101,4 +99,75 @@ public class DataRetriever {
         return gameData;
 
     }
+
+    public Date[] getDateRange(String stockID){
+
+        CompanyStockTransactionsDataImpl companyStockTransactionsData = new CompanyStockTransactionsDataImpl();
+
+        Date[] dateRange;
+        try {
+            dateRange = companyStockTransactionsData.getDataDaysRange(CompanyStockTransactionsData.DataType.OHLC,
+                    stockID);
+
+            return dateRange;
+        } catch (DataAccessException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public HashMap<Date, String> getGraphData(Date start, Date end, String stockID,
+                                              ArrayList<TradingDataAttribute> attributes){
+
+        CompanyStockTransactionsDataImpl companyStockTransactionsData = new CompanyStockTransactionsDataImpl();
+        HashMap<Date, String> chartData = new HashMap<>();
+        StockTradingData stockTradingData;
+
+        try {
+            stockTradingData = companyStockTransactionsData.getTradingData(CompanyStockTransactionsData.DataType.OHLC,
+                    stockID, start, end,NUM_OF_ROWS,attributes);
+
+            Set<Date> dates = stockTradingData.getDates();
+
+
+            for (Iterator<Date> iterator = dates.iterator(); iterator.hasNext();) {
+                Date next = iterator.next();
+
+                chartData.put(next,stockTradingData.getTradingDataAttributeValue(next,attributes.get(0)));
+            }
+
+        } catch (DataNotFoundException e) {
+            e.printStackTrace();
+        } catch (DataAccessException e) {
+            e.printStackTrace();
+        }
+
+
+        return chartData;
+    }
+
+    public Set<Date> getDates(Date start, Date end, String stockID, ArrayList<TradingDataAttribute> attributes){
+
+        CompanyStockTransactionsDataImpl companyStockTransactionsData = new CompanyStockTransactionsDataImpl();
+        Set<Date> dates;
+        StockTradingData stockTradingData;
+
+        try {
+            stockTradingData = companyStockTransactionsData.getTradingData(CompanyStockTransactionsData.DataType.OHLC,
+                    stockID, start, end,NUM_OF_ROWS,attributes);
+
+            dates = stockTradingData.getDates();
+
+            return dates;
+
+        } catch (DataNotFoundException e) {
+            e.printStackTrace();
+        } catch (DataAccessException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+
+    }
+
 }
