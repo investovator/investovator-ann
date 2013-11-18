@@ -33,8 +33,9 @@ import java.util.HashMap;
  */
 public class NNManager {
 
-    final int iterationCount = 10000;
-    final double error = 0.001;
+    final int ITERATION_COUNT = 5000;
+    final double ERROR = 0.001;
+    final int INPUT_PARAM_COUNT = 6;
 
     private HashMap<String,String> newParameters;
     private ArrayList<TradingDataAttribute> inputParameters;
@@ -57,7 +58,7 @@ public class NNManager {
         this.inputParameters = inputParameters;
         this.stockID = stockID;
         this.inputParamCount = inputParameters.size();
-        this.inputParamCount = 6;
+        this.inputParamCount = INPUT_PARAM_COUNT;
         status = false;
     }
 
@@ -69,8 +70,8 @@ public class NNManager {
 
         int inputParameterCount = inputParameters.size();
 
-        nnTrainer.setIterationCount(iterationCount);
-        nnTrainer.setError(error);
+        nnTrainer.setIterationCount(ITERATION_COUNT);
+        nnTrainer.setError(ERROR);
 
         for(int i = 0;i < inputParameterCount; i++){
 

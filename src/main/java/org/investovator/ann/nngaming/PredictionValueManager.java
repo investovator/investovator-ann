@@ -30,7 +30,7 @@ import java.util.ArrayList;
  */
 public class PredictionValueManager {
 
-    private int numOfDays;
+    private int NUM_OF_DAYS = 20;
     private float[] predictedValues;
     private NNPredictor nnPredictor;
     private double[] inputData;
@@ -40,9 +40,8 @@ public class PredictionValueManager {
 
     public PredictionValueManager(String stockID){
         this.stockID = stockID;
-        this.numOfDays = 5;                         //todo
         this.nnPredictor = new NNPredictor();
-        this.predictedValues = new float[numOfDays];
+        this.predictedValues = new float[NUM_OF_DAYS];
         this.attributes = new ArrayList<>();
         attributes.add(TradingDataAttribute.HIGH_PRICE);
         attributes.add(TradingDataAttribute.LOW_PRICE);
@@ -59,7 +58,7 @@ public class PredictionValueManager {
         inputData = dataRetriever.getGamingData(stockID,attributes);
         normalizeData();
 
-        for (int i = 0; i < numOfDays; i++){
+        for (int i = 0; i < NUM_OF_DAYS; i++){
 
             predictedValues[i] = (float) nnPredictor.getPredictedValue(stockID,
                     TradingDataAttribute.CLOSING_PRICE, inputData);
