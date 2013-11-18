@@ -39,24 +39,24 @@ public class NNManager {
 
     private HashMap<String,String> newParameters;
     private ArrayList<TradingDataAttribute> inputParameters;
-    private String stockID;
+    private ArrayList<String> stockIDs;
     private NNCreator nnCreator;
     private NNTrainer nnTrainer;
     private boolean status;
     private int inputParamCount;
     private DataManager dataManager;
 
-    public NNManager(HashMap newParameters,ArrayList<TradingDataAttribute> inputParameters,String stockID){
+    public NNManager(HashMap newParameters,ArrayList<TradingDataAttribute> inputParameters,ArrayList<String> stockIDs){
         this.newParameters = newParameters;
         this.inputParameters = inputParameters;
-        this.stockID = stockID;
+        this.stockIDs = stockIDs;
         this.inputParamCount = inputParameters.size() + newParameters.size();
         status = false;
     }
 
-    public NNManager(ArrayList<TradingDataAttribute> inputParameters,String stockID){
+    public NNManager(ArrayList<TradingDataAttribute> inputParameters,ArrayList<String> stockIDs){
         this.inputParameters = inputParameters;
-        this.stockID = stockID;
+        this.stockIDs = stockIDs;
         this.inputParamCount = inputParameters.size();
         this.inputParamCount = INPUT_PARAM_COUNT;
         status = false;
@@ -66,22 +66,25 @@ public class NNManager {
 
         nnCreator = new NNCreator(inputParamCount,1);
         nnTrainer = new NNTrainer();
-        dataManager = new DataManager(stockID,nnTrainer,inputParameters);
 
         int inputParameterCount = inputParameters.size();
 
         nnTrainer.setIterationCount(ITERATION_COUNT);
         nnTrainer.setError(ERROR);
 
-        for(int i = 0;i < inputParameterCount; i++){
+        for(int k = 0; k < stockIDs.size(); k++){
 
-            BasicNetwork network = nnCreator.createNetwork();
-            dataManager.prepareData(inputParameters.get(i));            //specifies predicting attribute
-            status = nnTrainer.TrainANN(network,stockID);
+            dataManager = new DataManager(stockIDs.get(k),nnTrainer,inputParameters);
 
-       }
+            for(int i = 0;i < inputParameterCount; i++){
 
+                BasicNetwork network = nnCreator.createNetwork();
+                dataManager.prepareData(inputParameters.get(i));            //specifies predicting attribute
+                status = nnTrainer.TrainANN(network,stockIDs.get(k));
 
+            }
+
+        }
 
         return status;
     }

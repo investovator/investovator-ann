@@ -33,8 +33,8 @@ import java.util.concurrent.TimeUnit;
 public class EventScheduler extends Thread {
 
     private final ScheduledExecutorService service = Executors.newSingleThreadScheduledExecutor();
-    private final int DAY_LENGTH = 10;
-    private final int BID_ADD_PERIOD = 2;
+    private final int DAY_LENGTH = 40;
+    private final int BID_ADD_PERIOD = 10;
     private static EventScheduler instance;
     private MarketEventReceiver marketEventReceiver;
 

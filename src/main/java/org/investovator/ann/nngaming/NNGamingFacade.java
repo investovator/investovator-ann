@@ -120,4 +120,14 @@ public class NNGamingFacade {
 
     }
 
+    public float[] getPredictedPrices(String stockID){
+
+        float[] predictedPrices;
+        PredictionValueManager predictionManager = new PredictionValueManager(stockID);
+        predictedPrices = predictionManager.getAllPredictionValues();
+
+        return predictedPrices;
+
+    }
+
 }
