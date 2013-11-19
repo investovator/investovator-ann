@@ -126,6 +126,12 @@ public class NNGamingFacade {
         PredictionValueManager predictionManager = new PredictionValueManager(stockID);
         predictedPrices = predictionManager.getAllPredictionValues();
 
+        for(int i = 0; i < predictedPrices.length; i++){
+
+            predictedPrices[i] = Float.valueOf(String.format("%.1f", predictedPrices[i]));
+
+        }
+
         return predictedPrices;
 
     }

@@ -62,7 +62,6 @@ public class PredictionValueManager {
 
             predictedValues[i] = (float) nnPredictor.getPredictedValue(stockID,
                     TradingDataAttribute.CLOSING_PRICE, inputData);
-            predictedValues[i] = Float.valueOf(String.format("%.2f", predictedValues[i]));
 
             updateInputData();
 
