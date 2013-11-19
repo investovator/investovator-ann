@@ -30,7 +30,7 @@ import java.util.ArrayList;
  */
 public class PredictionValueManager {
 
-    private int NUM_OF_DAYS = 20;
+    private int NUM_OF_DAYS = 10;
     private float[] predictedValues;
     private NNPredictor nnPredictor;
     private double[] inputData;
@@ -62,6 +62,7 @@ public class PredictionValueManager {
 
             predictedValues[i] = (float) nnPredictor.getPredictedValue(stockID,
                     TradingDataAttribute.CLOSING_PRICE, inputData);
+            predictedValues[i] = Float.valueOf(String.format("%.2f", predictedValues[i]));
 
             updateInputData();
 
