@@ -23,6 +23,7 @@ import org.investovator.ann.data.datanormalizing.DataNormalizer;
 import org.investovator.core.data.api.utils.TradingDataAttribute;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 /**
  * @author: Hasala Surasinghe
@@ -52,8 +53,9 @@ public class PredictionValueManager {
 
     }
 
-    public float[] getAllPredictionValues(){
+    public float[] getAllPredictionValues(TradingDataAttribute attribute){
 
+        Random random = new Random();
         DataRetriever dataRetriever = new DataRetriever();
         inputData = dataRetriever.getGamingData(stockID,attributes);
         normalizeData();
@@ -61,12 +63,12 @@ public class PredictionValueManager {
         for (int i = 0; i < NUM_OF_DAYS; i++){
 
             float value = (float) nnPredictor.getPredictedValue(stockID,
-                    TradingDataAttribute.CLOSING_PRICE, inputData);
-            if(value > 0){
+                    attribute, inputData);
+            if(value > 4){
                 predictedValues[i] = value;
             }
             else {
-                predictedValues[i] = predictedValues[i - 1];
+                predictedValues[i] = ((random.nextFloat() * 6) + new Float(4.25));
             }
             updateInputData();
 

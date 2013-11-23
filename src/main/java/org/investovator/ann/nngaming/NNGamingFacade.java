@@ -64,11 +64,13 @@ public class NNGamingFacade {
         if(predictedValues == null){                      //only predictions are retrieved once
 
             predictionValueManager = new PredictionValueManager(stockID);
-            predictedValues = predictionValueManager.getAllPredictionValues();
+            predictedValues = predictionValueManager.getAllPredictionValues(TradingDataAttribute.CLOSING_PRICE);
 
         }
 
         generatedBids = bidGenerator.getOrders(predictedValues[currentDay - 1],buyOrderCount,sellOrderCount);
+
+        predictedValues = null;
 
         return generatedBids;
     }
@@ -120,11 +122,10 @@ public class NNGamingFacade {
 
     }
 
-    public float[] getPredictedPrices(String stockID){
+    public float[] getPredictedPrices(String stockID, TradingDataAttribute attribute){
 
-        float[] predictedPrices;
-        PredictionValueManager predictionManager = new PredictionValueManager(stockID);
-        predictedPrices = predictionManager.getAllPredictionValues();
+        PredictionValueManager predictionValueManager = new PredictionValueManager(stockID);
+        float[] predictedPrices = predictionValueManager.getAllPredictionValues(attribute);
 
         for(int i = 0; i < predictedPrices.length; i++){
 

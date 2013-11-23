@@ -34,7 +34,7 @@ public class EventScheduler extends Thread {
 
     private final ScheduledExecutorService service = Executors.newSingleThreadScheduledExecutor();
     private final int DAY_LENGTH = 80;
-    private final int BID_ADD_PERIOD = 20;
+    private final int BID_ADD_PERIOD = 23;
     private static EventScheduler instance;
     private MarketEventReceiver marketEventReceiver;
 
@@ -71,8 +71,8 @@ public class EventScheduler extends Thread {
     @Override
     public void run() {
 
-        service.scheduleWithFixedDelay(dayChange,DAY_LENGTH,DAY_LENGTH, TimeUnit.SECONDS);
-        service.scheduleWithFixedDelay(bidAdd,8,BID_ADD_PERIOD,TimeUnit.SECONDS);
+        service.scheduleAtFixedRate(dayChange,DAY_LENGTH,DAY_LENGTH, TimeUnit.SECONDS);
+        service.scheduleAtFixedRate(bidAdd,0,BID_ADD_PERIOD,TimeUnit.SECONDS);
 
     }
 

@@ -36,6 +36,7 @@ public class NNManager {
     final int ITERATION_COUNT = 5000;
     final double ERROR = 0.001;
     final int INPUT_PARAM_COUNT = 6;
+    final int NEW_PARAM_COUNT = 0;  //todo - Change this according to the game
 
     private HashMap<String,String> newParameters;
     private ArrayList<TradingDataAttribute> inputParameters;
@@ -81,6 +82,7 @@ public class NNManager {
                 BasicNetwork network = nnCreator.createNetwork();
                 dataManager.prepareData(inputParameters.get(i));            //specifies predicting attribute
                 status = nnTrainer.TrainANN(network,stockIDs.get(k));
+
 
             }
 
