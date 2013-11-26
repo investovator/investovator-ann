@@ -44,28 +44,25 @@ public class NNManager {
     private NNCreator nnCreator;
     private NNTrainer nnTrainer;
     private boolean status;
-    private int inputParamCount;
     private DataManager dataManager;
 
     public NNManager(HashMap newParameters,ArrayList<TradingDataAttribute> inputParameters,ArrayList<String> stockIDs){
         this.newParameters = newParameters;
         this.inputParameters = inputParameters;
         this.stockIDs = stockIDs;
-        this.inputParamCount = inputParameters.size() + newParameters.size();
+       // this.inputParamCount = inputParameters.size() + newParameters.size();
         status = false;
     }
 
     public NNManager(ArrayList<TradingDataAttribute> inputParameters,ArrayList<String> stockIDs){
         this.inputParameters = inputParameters;
         this.stockIDs = stockIDs;
-        this.inputParamCount = inputParameters.size();
-        this.inputParamCount = INPUT_PARAM_COUNT;
         status = false;
     }
 
     public boolean createNeuralNetwork(){
 
-        nnCreator = new NNCreator(inputParamCount,1);
+        nnCreator = new NNCreator(INPUT_PARAM_COUNT,1);
         nnTrainer = new NNTrainer();
 
         int inputParameterCount = inputParameters.size();
