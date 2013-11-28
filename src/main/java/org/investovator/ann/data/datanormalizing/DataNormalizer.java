@@ -97,7 +97,7 @@ public class DataNormalizer {
 
     private double getNormalizedValue(double value){
 
-        NormalizedField norm = new NormalizedField(NormalizationAction.Normalize,null,max,0,1,0);
+        NormalizedField norm = new NormalizedField(NormalizationAction.Normalize,null,max,min,1,0);
 
         return norm.normalize(value);
     }
@@ -107,7 +107,7 @@ public class DataNormalizer {
         NormalizationModel model = loadNormalizationModel(tradingDataAttribute);
 
         NormalizedField norm = new NormalizedField(NormalizationAction.Normalize,null,
-                model.getOldMax(),0,1,0);
+                model.getOldMax(),model.getOldMin(),1,0);
 
         return norm.normalize(value);
     }
@@ -117,7 +117,7 @@ public class DataNormalizer {
         NormalizationModel model = loadNormalizationModel(tradingDataAttribute);
 
         NormalizedField norm = new NormalizedField(NormalizationAction.Normalize,null,
-                model.getOldMax(),0,1,0);
+                model.getOldMax(),model.getOldMin(),1,0);
 
         return norm.deNormalize(normalizedValue);
     }

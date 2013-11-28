@@ -75,12 +75,7 @@ public class AnalysisDataManager {
 
         dateSet = dataRetriever.getDates(dates[0],dates[1],symbol,tradingDataAttributes);
 
-        int halfIndex = dateSet.size()/2;
-        Date endDate = (Date) dateSet.toArray()[halfIndex];
-
-        dateSet = dataRetriever.getDates(dates[0],endDate,symbol,tradingDataAttributes);
-
-        dataMap = dataRetriever.getData(dates[0],endDate,
+        dataMap = dataRetriever.getData(dates[0],dates[1],
                 analysisStockID, analysisAttributes);
 
         stockTradingData = dataRetriever.retrieveTrainingData(symbol,tradingDataAttributes);
