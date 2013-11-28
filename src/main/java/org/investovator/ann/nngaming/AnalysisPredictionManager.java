@@ -96,7 +96,9 @@ public class AnalysisPredictionManager {
                 }
 
             }
-            closingPrices.add(inputData[attributes.indexOf(TradingDataAttribute.CLOSING_PRICE)]);
+            float actualValue = (float) inputData[attributes.indexOf(TradingDataAttribute.CLOSING_PRICE)];
+            actualValue = Float.valueOf(String.format("%.1f", actualValue));
+            closingPrices.add(actualValue);
 
             inputData[tradingAttributeCount] = analysisValue;
 
