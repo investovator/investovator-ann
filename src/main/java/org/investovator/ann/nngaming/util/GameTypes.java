@@ -25,7 +25,7 @@ package org.investovator.ann.nngaming.util;
 public enum GameTypes {
 
     TRADING_GAME,
-    PREDICTION_GAME;
+    ANALYSIS_GAME;
 
 
     public static String getGameType(GameTypes gameType) {
@@ -33,8 +33,8 @@ public enum GameTypes {
         switch (gameType) {
             case TRADING_GAME:
                 return "Trading Game";
-            case PREDICTION_GAME:
-                return "Prediction Game";
+            case ANALYSIS_GAME:
+                return "Analysis Game";
         }
         return null;
     }

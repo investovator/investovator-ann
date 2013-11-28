@@ -19,11 +19,12 @@
 package org.investovator.ann.neuralnet;
 
 import org.encog.neural.networks.BasicNetwork;
+import org.investovator.ann.data.AnalysisDataManager;
 import org.investovator.ann.data.DataManager;
+import org.investovator.ann.nngaming.util.GameTypes;
 import org.investovator.core.data.api.utils.TradingDataAttribute;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 /**
  *
@@ -33,59 +34,80 @@ import java.util.HashMap;
  */
 public class NNManager {
 
-    final int ITERATION_COUNT = 5000;
+    final int GAMING_ITERATION_COUNT = 5000;
+    final int ANALYSIS_ITERATION_COUNT = 10000;
     final double ERROR = 0.001;
-    final int INPUT_PARAM_COUNT = 6;
-    final int NEW_PARAM_COUNT = 0;  //todo - Change this according to the game
+    final int GAMING_INPUT_PARAM_COUNT = 6;
+    final int OUTPUT_PARAM_COUNT = 1;
+    final int ANALYSIS_INPUT_PARAM_COUNT = 7;
 
-    private HashMap<String,String> newParameters;
     private ArrayList<TradingDataAttribute> inputParameters;
     private ArrayList<String> stockIDs;
+    private ArrayList<String> analysisParameters;
     private NNCreator nnCreator;
     private NNTrainer nnTrainer;
-    private boolean status;
     private DataManager dataManager;
 
-    public NNManager(HashMap newParameters,ArrayList<TradingDataAttribute> inputParameters,ArrayList<String> stockIDs){
-        this.newParameters = newParameters;
+    public NNManager(ArrayList<TradingDataAttribute> inputParameters,ArrayList<String> stockIDs,
+                     ArrayList<String> analysisParameters){
         this.inputParameters = inputParameters;
         this.stockIDs = stockIDs;
-       // this.inputParamCount = inputParameters.size() + newParameters.size();
-        status = false;
+        this.analysisParameters = analysisParameters;
     }
 
-    public NNManager(ArrayList<TradingDataAttribute> inputParameters,ArrayList<String> stockIDs){
-        this.inputParameters = inputParameters;
-        this.stockIDs = stockIDs;
-        status = false;
-    }
+    public void createGamingNeuralNetworks(){
 
-    public boolean createNeuralNetwork(){
-
-        nnCreator = new NNCreator(INPUT_PARAM_COUNT,1);
+        nnCreator = new NNCreator(GAMING_INPUT_PARAM_COUNT,OUTPUT_PARAM_COUNT);
         nnTrainer = new NNTrainer();
 
         int inputParameterCount = inputParameters.size();
 
-        nnTrainer.setIterationCount(ITERATION_COUNT);
+        nnTrainer.setIterationCount(GAMING_ITERATION_COUNT);
         nnTrainer.setError(ERROR);
 
         for(int k = 0; k < stockIDs.size(); k++){
 
-            dataManager = new DataManager(stockIDs.get(k),nnTrainer,inputParameters);
+            dataManager = new DataManager(stockIDs.get(k),nnTrainer,inputParameters,GameTypes.TRADING_GAME);
 
             for(int i = 0;i < inputParameterCount; i++){
 
                 BasicNetwork network = nnCreator.createNetwork();
                 dataManager.prepareData(inputParameters.get(i));            //specifies predicting attribute
-                status = nnTrainer.TrainANN(network,stockIDs.get(k));
-
+                nnTrainer.TrainANN(network,stockIDs.get(k), GameTypes.TRADING_GAME);
 
             }
 
         }
 
-        return status;
+    }
+
+    public void createAnalysisNeuralNetworks(){
+
+        AnalysisDataManager analysisDataManager;
+        nnCreator = new NNCreator(ANALYSIS_INPUT_PARAM_COUNT,OUTPUT_PARAM_COUNT);
+        nnTrainer = new NNTrainer();
+
+        nnTrainer.setIterationCount(ANALYSIS_ITERATION_COUNT);
+        nnTrainer.setError(ERROR);
+
+        for(int k = 0; k < stockIDs.size(); k++){
+
+            for(int j = 0; j < analysisParameters.size(); j++){
+
+                if(stockIDs.get(k) == analysisParameters.get(j))
+                    continue;
+
+                analysisDataManager = new AnalysisDataManager(stockIDs.get(k),nnTrainer,inputParameters,
+                        GameTypes.ANALYSIS_GAME,analysisParameters.get(j));
+
+                    BasicNetwork network = nnCreator.createNetwork();
+                    analysisDataManager.prepareData(TradingDataAttribute.CLOSING_PRICE);            //specifies predicting attribute
+                    nnTrainer.TrainANN(network,stockIDs.get(k),GameTypes.ANALYSIS_GAME);
+
+            }
+        }
+
+
     }
 
 

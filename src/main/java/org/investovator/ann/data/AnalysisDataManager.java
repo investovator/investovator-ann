@@ -31,7 +31,7 @@ import java.util.*;
  * @author: Hasala Surasinghe
  * @version: ${Revision}
  */
-public class DataManager {
+public class AnalysisDataManager {
 
     private StockTradingData stockTradingData;
     private NNTrainer nnTrainer;
@@ -41,7 +41,7 @@ public class DataManager {
 
     private HashMap<Date,HashMap<TradingDataAttribute,String>> tradingData;
     private HashMap<TradingDataAttribute,String> tradingValues;
-    private Set<Date> dates;
+    private Set<Date> dateSet;
     private ArrayList<TradingDataAttribute> tradingDataAttributes;
 
     private double marketData [][];
@@ -51,26 +51,44 @@ public class DataManager {
     private double idealData [][];
     private String symbol;
     private GameTypes gameType;
+    private ArrayList<TradingDataAttribute> analysisAttributes;
+    private HashMap<Date, String> dataMap;
+    private String analysisStockID;
 
-    public DataManager(String stockID,NNTrainer nnTrainer,ArrayList<TradingDataAttribute> inputParameters, GameTypes gameType){
+    public AnalysisDataManager(String stockID,NNTrainer nnTrainer,ArrayList<TradingDataAttribute> inputParameters,
+                               GameTypes gameType,String analysisStockID){
+        this.nnTrainer = nnTrainer;
+        this.dataRetriever = new DataRetriever();
+        this.tradingDataAttributes = inputParameters;
+        this.symbol = stockID;
+        this.gameType = gameType;
+        this.analysisAttributes = new ArrayList<>();
+        analysisAttributes.add(TradingDataAttribute.CLOSING_PRICE);
+        this.analysisStockID = analysisStockID;
 
-         this.nnTrainer = nnTrainer;
-         this.dataRetriever = new DataRetriever();
-         this.tradingDataAttributes = inputParameters;
-         this.symbol = stockID;
-         this.gameType = gameType;
-
-         retrieveData();       //Data retrieved only once for NNTraining
-
+        retrieveData();
     }
 
     private void retrieveData(){
 
-        stockTradingData = dataRetriever.retrieveTrainingData(symbol, tradingDataAttributes);
+        Date dates[] = dataRetriever.getDateRange(symbol);
+
+        dateSet = dataRetriever.getDates(dates[0],dates[1],symbol,tradingDataAttributes);
+
+        int halfIndex = dateSet.size()/2;
+        Date endDate = (Date) dateSet.toArray()[halfIndex];
+
+        dateSet = dataRetriever.getDates(dates[0],endDate,symbol,tradingDataAttributes);
+
+        dataMap = dataRetriever.getData(dates[0],endDate,
+                analysisStockID, analysisAttributes);
+
+        stockTradingData = dataRetriever.retrieveTrainingData(symbol,tradingDataAttributes);
         tradingData = stockTradingData.getTradingData();
-        dates = stockTradingData.getDates();
 
         tradingDataAttributes = stockTradingData.getAttributes();
+
+        tradingDataAttributes.add(TradingDataAttribute.CLOSING_PRICE);
 
     }
 
@@ -78,13 +96,13 @@ public class DataManager {
 
         //iterate dates and get data
         int i = 0;
-        int tradingAttributeCount = tradingDataAttributes.size();
-        int rowCount = dates.size();
+        int tradingAttributeCount = tradingDataAttributes.size() - 1;
+        int rowCount = dateSet.size();
 
         //Prepare Data Set
-        marketData = new double[rowCount][tradingAttributeCount];
+        marketData = new double[rowCount][tradingAttributeCount + 1];
 
-        for (Iterator<Date> iterator = dates.iterator(); iterator.hasNext();) {
+        for (Iterator<Date> iterator = dateSet.iterator(); iterator.hasNext();) {
             Date next = iterator.next();
             tradingValues = tradingData.get(next);
             for(int j = 0; j < tradingAttributeCount; j++){
@@ -92,11 +110,18 @@ public class DataManager {
                 if(tradingValues.get(tradingDataAttributes.get(j)).isEmpty())
                     marketData[i][j] = 0.0;
                 else
-                marketData[i][j] = Double.parseDouble(tradingValues.get(tradingDataAttributes.get(j)));
+                    marketData[i][j] = Double.parseDouble(tradingValues.get(tradingDataAttributes.get(j)));
 
+            }
+            if(dataMap.get(next) == null){
+                marketData[i][tradingAttributeCount] = marketData[i - 1][tradingAttributeCount];
+            }
+            else{
+                marketData[i][tradingAttributeCount] = Double.parseDouble(dataMap.get(next));
             }
             i++;
         }
+
 
         //Pre-process Data Set
         dataPreprocessor = new DataPreprocessor();
@@ -128,6 +153,5 @@ public class DataManager {
         nnTrainer.setPredictingAttribute(predictingAttribute);
 
     }
-
 
 }

@@ -56,8 +56,12 @@ public class NNManagerTest {
         stockIDs.add("RCL");
         stockIDs.add("HASU");
 
-        NNManager nnManager = new NNManager(inputParameters, stockIDs);
-        boolean status = nnManager.createNeuralNetwork();
-        assert (status == true);
+        ArrayList<String> analysisParams = new ArrayList<>();
+        analysisParams.add("SAMP Stock Price");
+        analysisParams.add("RCL Stock Price");
+        analysisParams.add("HASU Stock Price");
+
+        NNManager nnManager = new NNManager(inputParameters, stockIDs,analysisParams);
+        nnManager.createGamingNeuralNetworks();
     }
 }

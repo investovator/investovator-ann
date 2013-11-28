@@ -20,6 +20,7 @@ package org.investovator.ann.data.datanormalizing;
 
 import org.encog.util.arrayutil.NormalizationAction;
 import org.encog.util.arrayutil.NormalizedField;
+import org.investovator.ann.nngaming.util.GameTypes;
 import org.investovator.core.data.api.utils.TradingDataAttribute;
 
 import java.util.ArrayList;
@@ -34,10 +35,12 @@ public class DataNormalizer {
     private double min = 0;
     private double max = 0;
     private String symbol;
+    private GameTypes gameType;
 
-    public DataNormalizer(String symbol){
+    public DataNormalizer(String symbol,GameTypes gameType){
 
         this.symbol = symbol;
+        this.gameType = gameType;
 
     }
 
@@ -74,8 +77,11 @@ public class DataNormalizer {
             model.setOldMax(max);
             model.setOldMin(min);
 
-            if(j < (columnCount - 1))
-                serializer.saveModel(model, String.valueOf(attributes.get(j)), symbol);
+            if(j < (columnCount - 1) && (gameType == GameTypes.TRADING_GAME))
+                serializer.saveModel(model, String.valueOf(attributes.get(j)), symbol, gameType);
+
+            else if(j < (columnCount - 2) && (gameType == GameTypes.ANALYSIS_GAME))
+                serializer.saveModel(model, String.valueOf(attributes.get(j)), symbol, gameType);
 
 
             for (int i = 0; i < rowCount; i++) {
@@ -91,7 +97,7 @@ public class DataNormalizer {
 
     private double getNormalizedValue(double value){
 
-        NormalizedField norm = new NormalizedField(NormalizationAction.Normalize,null,max,min,1,0);
+        NormalizedField norm = new NormalizedField(NormalizationAction.Normalize,null,max,0,1,0);
 
         return norm.normalize(value);
     }
@@ -101,7 +107,7 @@ public class DataNormalizer {
         NormalizationModel model = loadNormalizationModel(tradingDataAttribute);
 
         NormalizedField norm = new NormalizedField(NormalizationAction.Normalize,null,
-                model.getOldMax(),model.getOldMin(),1,0);
+                model.getOldMax(),0,1,0);
 
         return norm.normalize(value);
     }
@@ -111,7 +117,7 @@ public class DataNormalizer {
         NormalizationModel model = loadNormalizationModel(tradingDataAttribute);
 
         NormalizedField norm = new NormalizedField(NormalizationAction.Normalize,null,
-                model.getOldMax(),model.getOldMin(),1,0);
+                model.getOldMax(),0,1,0);
 
         return norm.deNormalize(normalizedValue);
     }
@@ -124,22 +130,22 @@ public class DataNormalizer {
 
         if(tradingDataAttribute == TradingDataAttribute.CLOSING_PRICE)
         {
-            model = serializer.readModel(String.valueOf(TradingDataAttribute.CLOSING_PRICE),symbol);
+            model = serializer.readModel(String.valueOf(TradingDataAttribute.CLOSING_PRICE),symbol,gameType);
         }
         else if (tradingDataAttribute == TradingDataAttribute.HIGH_PRICE){
-            model = serializer.readModel(String.valueOf(TradingDataAttribute.HIGH_PRICE),symbol);
+            model = serializer.readModel(String.valueOf(TradingDataAttribute.HIGH_PRICE),symbol,gameType);
         }
         else if (tradingDataAttribute == TradingDataAttribute.LOW_PRICE){
-            model = serializer.readModel(String.valueOf(TradingDataAttribute.LOW_PRICE),symbol);
+            model = serializer.readModel(String.valueOf(TradingDataAttribute.LOW_PRICE),symbol,gameType);
         }
         else if(tradingDataAttribute == TradingDataAttribute.TRADES){
-            model = serializer.readModel(String.valueOf(TradingDataAttribute.TRADES),symbol);
+            model = serializer.readModel(String.valueOf(TradingDataAttribute.TRADES),symbol,gameType);
         }
         else if(tradingDataAttribute == TradingDataAttribute.SHARES){
-            model = serializer.readModel(String.valueOf(TradingDataAttribute.SHARES),symbol);
+            model = serializer.readModel(String.valueOf(TradingDataAttribute.SHARES),symbol,gameType);
         }
         else if (tradingDataAttribute == TradingDataAttribute.TURNOVER){
-            model = serializer.readModel(String.valueOf(TradingDataAttribute.TURNOVER),symbol);
+            model = serializer.readModel(String.valueOf(TradingDataAttribute.TURNOVER),symbol,gameType);
         }
 
         return model;

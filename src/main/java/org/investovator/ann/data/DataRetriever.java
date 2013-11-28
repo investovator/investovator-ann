@@ -116,7 +116,7 @@ public class DataRetriever {
         return null;
     }
 
-    public HashMap<Date, String> getGraphData(Date start, Date end, String stockID,
+    public HashMap<Date, String> getData(Date start, Date end, String stockID,
                                               ArrayList<TradingDataAttribute> attributes){
 
         CompanyStockTransactionsDataImpl companyStockTransactionsData = new CompanyStockTransactionsDataImpl();
@@ -169,5 +169,6 @@ public class DataRetriever {
         return null;
 
     }
+
 
 }

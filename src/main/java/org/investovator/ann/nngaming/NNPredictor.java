@@ -22,6 +22,7 @@ import org.encog.neural.networks.BasicNetwork;
 import org.encog.persist.EncogDirectoryPersistence;
 import org.investovator.ann.config.ConfigReceiver;
 import org.investovator.ann.data.datanormalizing.DataNormalizer;
+import org.investovator.ann.nngaming.util.GameTypes;
 import org.investovator.core.data.api.utils.TradingDataAttribute;
 
 import java.io.File;
@@ -42,21 +43,21 @@ public class NNPredictor {
 
     }
 
-    private void loadNeuralNetworkModel(String stockID){
+    private void loadNeuralNetworkModel(String stockID,GameTypes gameType){
 
-        network = (BasicNetwork) EncogDirectoryPersistence.loadObject(new File(basePath+"/resources/"
-                +stockID+"/"+stockID+"_"+predictingAttribute));
+        network = (BasicNetwork) EncogDirectoryPersistence.loadObject(new File
+                (basePath+"/resources/"+gameType.toString()+"/"+stockID+"/"+stockID+"_"+predictingAttribute));
 
     }
 
-    public double getPredictedValue(String stockID, TradingDataAttribute attribute, double[] inputData){
+    public double getPredictedValue(String stockID, TradingDataAttribute attribute, double[] inputData,GameTypes gameType){
 
         this.predictingAttribute = attribute;
         double[] outputArr = new double[1];
         double predictedValue;
 
-        DataNormalizer dataNormalizer = new DataNormalizer(stockID);
-        loadNeuralNetworkModel(stockID);
+        DataNormalizer dataNormalizer = new DataNormalizer(stockID,gameType);
+        loadNeuralNetworkModel(stockID,gameType);
 
         network.compute(inputData, outputArr);
 

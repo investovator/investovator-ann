@@ -31,6 +31,7 @@ public class NNCreator implements NNCreatorInterface{
 
         final private int inputParameterCount;
         final private int outputParameterCount;
+        private int hiddenLayerNeuronCount = 0;
 
         public NNCreator(int inputParameterCount,int outputParameterCount){
             this.inputParameterCount = inputParameterCount;
@@ -40,7 +41,7 @@ public class NNCreator implements NNCreatorInterface{
     public BasicNetwork createNetwork(){
 
         BasicNetwork network = new BasicNetwork();
-        int hiddenLayerNeuronCount = 12;
+        hiddenLayerNeuronCount = inputParameterCount * 2;
 
         network.addLayer(new BasicLayer(new ActivationTANH(), true,inputParameterCount));
         network.addLayer(new BasicLayer(new ActivationTANH(), true,hiddenLayerNeuronCount));

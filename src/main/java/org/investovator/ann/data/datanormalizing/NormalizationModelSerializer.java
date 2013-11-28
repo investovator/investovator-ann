@@ -19,6 +19,7 @@
 package org.investovator.ann.data.datanormalizing;
 
 import org.investovator.ann.config.ConfigReceiver;
+import org.investovator.ann.nngaming.util.GameTypes;
 
 import java.io.*;
 
@@ -37,14 +38,14 @@ public class NormalizationModelSerializer {
 
     }
 
-    public void saveModel(NormalizationModel model, String fileName, String symbol){
+    public void saveModel(NormalizationModel model, String fileName, String symbol,GameTypes gameType){
 
         // Save the model to file
         FileOutputStream fos;
         ObjectOutputStream out;
         try {
 
-            File modelSavePath = new File(basePath+"/resources/"+symbol);
+            File modelSavePath = new File(basePath+"/resources/"+gameType.toString()+"/"+symbol);
 
             if (!modelSavePath.exists())
                 modelSavePath.mkdirs();
@@ -60,13 +61,13 @@ public class NormalizationModelSerializer {
 
     }
 
-    public NormalizationModel readModel(String fileName, String symbol){
+    public NormalizationModel readModel(String fileName, String symbol,GameTypes gameType){
 
         // Read the model from file
         FileInputStream fis;
         ObjectInputStream in;
         try {
-            fis = new FileInputStream(basePath+"/resources/"+symbol+"/"+fileName);
+            fis = new FileInputStream(basePath+"/resources/"+gameType.toString()+"/"+symbol+"/"+fileName);
             in = new ObjectInputStream(fis);
             normalizationModel = (NormalizationModel) in.readObject();
             in.close();

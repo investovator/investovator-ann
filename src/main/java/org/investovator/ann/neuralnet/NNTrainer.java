@@ -27,6 +27,7 @@ import org.encog.neural.networks.BasicNetwork;
 import org.encog.neural.networks.training.propagation.resilient.ResilientPropagation;
 import org.encog.persist.EncogDirectoryPersistence;
 import org.investovator.ann.config.ConfigReceiver;
+import org.investovator.ann.nngaming.util.GameTypes;
 import org.investovator.core.data.api.utils.TradingDataAttribute;
 
 import java.io.File;
@@ -52,7 +53,7 @@ public class NNTrainer {
         this.basePath = ConfigReceiver.getBasePath();
     }
 
-    public boolean TrainANN(BasicNetwork network, String stockID){
+    public boolean TrainANN(BasicNetwork network, String stockID,GameTypes gameType){
         NeuralDataSet trainingSet = new BasicNeuralDataSet(inputData, idealData);
 
         // train the neural network
@@ -77,16 +78,16 @@ public class NNTrainer {
         double e = network.calculateError(trainingSet);
         System.out.println("Network trained to error: " + e);
 
-        saveNetwork(stockID,network);
+        saveNetwork(stockID,network,gameType);
 
         return trainingSucceeded;
     }
 
-    private void saveNetwork(String stockID,BasicNetwork network){
+    private void saveNetwork(String stockID,BasicNetwork network,GameTypes gameType){
 
         System.out.println("Saving network");
-        EncogDirectoryPersistence.saveObject(new File(basePath+"/resources/"+stockID+"/"+stockID+"_"+predictingAttribute),
-                network);
+        EncogDirectoryPersistence.saveObject(new File
+                (basePath+"/resources/"+gameType.toString()+"/"+stockID+"/"+stockID+"_"+predictingAttribute),network);
 
     }
 

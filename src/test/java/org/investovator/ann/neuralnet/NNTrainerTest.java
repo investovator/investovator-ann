@@ -19,6 +19,7 @@
 package org.investovator.ann.neuralnet;
 
 import org.encog.neural.networks.BasicNetwork;
+import org.investovator.ann.nngaming.util.GameTypes;
 import org.investovator.core.data.api.utils.TradingDataAttribute;
 import org.junit.After;
 import org.junit.Before;
@@ -46,7 +47,7 @@ public class NNTrainerTest {
         nnTrainer.setIterationCount(10000);
         nnTrainer.setPredictingAttribute(TradingDataAttribute.CLOSING_PRICE);
        // nnTrainer.setTrainingData();
-        assert (nnTrainer.TrainANN(new BasicNetwork(), "SAMP") == true);
+        assert (nnTrainer.TrainANN(new BasicNetwork(), "SAMP", GameTypes.TRADING_GAME) == true);
 
     }
 

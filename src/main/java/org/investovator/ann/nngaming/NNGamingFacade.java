@@ -19,6 +19,7 @@
 package org.investovator.ann.nngaming;
 
 import org.investovator.ann.data.DataRetriever;
+import org.investovator.ann.nngaming.util.GameTypes;
 import org.investovator.core.data.api.utils.TradingDataAttribute;
 
 import java.util.ArrayList;
@@ -64,7 +65,7 @@ public class NNGamingFacade {
         if(predictedValues == null){                      //only predictions are retrieved once
 
             predictionValueManager = new PredictionValueManager(stockID);
-            predictedValues = predictionValueManager.getAllPredictionValues(TradingDataAttribute.CLOSING_PRICE);
+            predictedValues = predictionValueManager.getAllPredictionValues(TradingDataAttribute.CLOSING_PRICE, GameTypes.TRADING_GAME);
 
         }
 
@@ -95,7 +96,7 @@ public class NNGamingFacade {
         DataRetriever dataRetriever = new DataRetriever();
         HashMap<Date, String> chartData;
 
-        chartData = dataRetriever.getGraphData(start, end, stockID, attributes);
+        chartData = dataRetriever.getData(start, end, stockID, attributes);
 
         return chartData;
     }
@@ -125,7 +126,7 @@ public class NNGamingFacade {
     public float[] getPredictedPrices(String stockID, TradingDataAttribute attribute){
 
         PredictionValueManager predictionValueManager = new PredictionValueManager(stockID);
-        float[] predictedPrices = predictionValueManager.getAllPredictionValues(attribute);
+        float[] predictedPrices = predictionValueManager.getAllPredictionValues(attribute, GameTypes.TRADING_GAME);
 
         for(int i = 0; i < predictedPrices.length; i++){
 
@@ -134,6 +135,17 @@ public class NNGamingFacade {
         }
 
         return predictedPrices;
+
+    }
+
+    //Returns data for Analysis Tab
+
+    public ArrayList<ArrayList<Object>> getAnalysisData(Date start, Date end, String stockID, GameTypes gameType,
+                                                        double analysisValue,String analysisStockID){
+
+        AnalysisPredictionManager analysisPredictionManager = new AnalysisPredictionManager();
+
+        return analysisPredictionManager.getGraphData(start,end,stockID,gameType,analysisValue,analysisStockID);
 
     }
 

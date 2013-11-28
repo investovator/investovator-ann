@@ -18,6 +18,7 @@
 
 package org.investovator.ann.data.datanormalizing;
 
+import org.investovator.ann.nngaming.util.GameTypes;
 import org.investovator.core.data.api.utils.TradingDataAttribute;
 import org.junit.Test;
 
@@ -30,7 +31,7 @@ public class DataNormalizerTest {
     @Test
     public void testGetNormalizedValue() throws Exception {
 
-        DataNormalizer dataNormalizer = new DataNormalizer("SAMP");
+        DataNormalizer dataNormalizer = new DataNormalizer("SAMP", GameTypes.TRADING_GAME);
         assert (dataNormalizer.getNormalizedValue(200, TradingDataAttribute.HIGH_PRICE) == 0.12521869532616844);
         assert (dataNormalizer.getNormalizedValue(200,TradingDataAttribute.CLOSING_PRICE) == 0.1344998694176025);
         assert (dataNormalizer.getNormalizedValue(200,TradingDataAttribute.LOW_PRICE) == 0.13570487483530963);
@@ -38,7 +39,7 @@ public class DataNormalizerTest {
         assert (dataNormalizer.getNormalizedValue(200,TradingDataAttribute.SHARES) == 1.2427978312183607E-5);
         assert (dataNormalizer.getNormalizedValue(20000,TradingDataAttribute.TURNOVER) == 1.1834216631964977E-7);
 
-        DataNormalizer dataNormalizer1 = new DataNormalizer("RCL");
+        DataNormalizer dataNormalizer1 = new DataNormalizer("RCL",GameTypes.TRADING_GAME);
         assert (dataNormalizer1.getNormalizedValue(200, TradingDataAttribute.HIGH_PRICE) == 0.48872180451127817);
         assert (dataNormalizer1.getNormalizedValue(200,TradingDataAttribute.CLOSING_PRICE) == 0.5043943446694689);
         assert (dataNormalizer1.getNormalizedValue(200,TradingDataAttribute.LOW_PRICE) == 0.5264195583596214);
@@ -51,7 +52,7 @@ public class DataNormalizerTest {
     @Test
     public void testGetDenormalizedValue() throws Exception {
 
-        DataNormalizer dataNormalizer = new DataNormalizer("SAMP");
+        DataNormalizer dataNormalizer = new DataNormalizer("SAMP",GameTypes.TRADING_GAME);
         assert (dataNormalizer.getDenormalizedValue(0.12521869532616844, TradingDataAttribute.HIGH_PRICE) == 200);
         assert (dataNormalizer.getDenormalizedValue(0.1344998694176025, TradingDataAttribute.CLOSING_PRICE) == 200);
         assert (dataNormalizer.getDenormalizedValue(0.13570487483530963, TradingDataAttribute.LOW_PRICE) == 200);
@@ -59,7 +60,7 @@ public class DataNormalizerTest {
         assert (dataNormalizer.getDenormalizedValue(1.2427978312183607E-5, TradingDataAttribute.SHARES) == 200);
         assert (dataNormalizer.getDenormalizedValue(1.1834216631964977E-7, TradingDataAttribute.TURNOVER) == 20000);
 
-        DataNormalizer dataNormalizer1 = new DataNormalizer("RCL");
+        DataNormalizer dataNormalizer1 = new DataNormalizer("RCL",GameTypes.TRADING_GAME);
         assert (dataNormalizer1.getDenormalizedValue(0.48872180451127817, TradingDataAttribute.HIGH_PRICE) == 200);
         assert (dataNormalizer1.getDenormalizedValue(0.5043943446694689, TradingDataAttribute.CLOSING_PRICE) == 200);
         assert (dataNormalizer1.getDenormalizedValue(0.5264195583596214, TradingDataAttribute.LOW_PRICE) == 200);

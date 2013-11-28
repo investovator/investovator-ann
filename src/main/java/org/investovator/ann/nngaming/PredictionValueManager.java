@@ -20,6 +20,7 @@ package org.investovator.ann.nngaming;
 
 import org.investovator.ann.data.DataRetriever;
 import org.investovator.ann.data.datanormalizing.DataNormalizer;
+import org.investovator.ann.nngaming.util.GameTypes;
 import org.investovator.core.data.api.utils.TradingDataAttribute;
 
 import java.util.ArrayList;
@@ -38,6 +39,7 @@ public class PredictionValueManager {
     private ArrayList<TradingDataAttribute> attributes;
     private DataNormalizer dataNormalizer;
     private String stockID;
+    private GameTypes gameType;
 
     public PredictionValueManager(String stockID){
         this.stockID = stockID;
@@ -53,7 +55,8 @@ public class PredictionValueManager {
 
     }
 
-    public float[] getAllPredictionValues(TradingDataAttribute attribute){
+    public float[] getAllPredictionValues(TradingDataAttribute attribute, GameTypes gameType){
+        this.gameType = gameType;
 
         Random random = new Random();
         DataRetriever dataRetriever = new DataRetriever();
@@ -63,7 +66,7 @@ public class PredictionValueManager {
         for (int i = 0; i < NUM_OF_DAYS; i++){
 
             float value = (float) nnPredictor.getPredictedValue(stockID,
-                    attribute, inputData);
+                    attribute, inputData,gameType);
             if(value > 4){
                 predictedValues[i] = value;
             }
@@ -84,7 +87,7 @@ public class PredictionValueManager {
 
         for(int i = 0; i < attributeCount; i ++){
 
-            temp[i] = nnPredictor.getPredictedValue(stockID,attributes.get(i),inputData);
+            temp[i] = nnPredictor.getPredictedValue(stockID,attributes.get(i),inputData,gameType);
 
         }
         inputData = temp;
@@ -93,7 +96,7 @@ public class PredictionValueManager {
 
     private void normalizeData(){
 
-        dataNormalizer = new DataNormalizer(stockID);
+        dataNormalizer = new DataNormalizer(stockID,gameType);
 
         for(int i = 0;i < inputData.length; i++){
 
