@@ -88,8 +88,12 @@ public class AnalysisPredictionManager {
             tradingValues = tradingData.get(next);
             for(int j = 0; j < tradingAttributeCount; j++){
 
-                inputData[j] = Float.valueOf(tradingValues.get(attributes.get(j)));
-
+                if(tradingValues.get(attributes.get(j)).isEmpty()){
+                    inputData[j] = inputData[j - 1];
+                }
+                else{
+                    inputData[j] = Float.valueOf(tradingValues.get(attributes.get(j)));
+                }
 
             }
             closingPrices.add(inputData[attributes.indexOf(TradingDataAttribute.CLOSING_PRICE)]);
