@@ -18,12 +18,8 @@
 
 package org.investovator.ann.neuralnet;
 
-import org.investovator.core.data.api.utils.TradingDataAttribute;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Test;
-
-import java.util.ArrayList;
 
 /**
  * @author: Hasala Surasinghe
@@ -44,24 +40,24 @@ public class NNManagerTest {
 
     }
 
-    @Test
-    public void testCreateNeuralNetwork() throws Exception {
-        ArrayList<TradingDataAttribute> inputParameters = new ArrayList<>();
-        inputParameters.add(TradingDataAttribute.CLOSING_PRICE);
-        inputParameters.add(TradingDataAttribute.HIGH_PRICE);
-        inputParameters.add(TradingDataAttribute.LOW_PRICE);
-
-        ArrayList<String> stockIDs = new ArrayList<>();
-        stockIDs.add("SAMP");
-        stockIDs.add("RCL");
-        stockIDs.add("HASU");
-
-        ArrayList<String> analysisParams = new ArrayList<>();
-        analysisParams.add("SAMP Stock Price");
-        analysisParams.add("RCL Stock Price");
-        analysisParams.add("HASU Stock Price");
-
-        NNManager nnManager = new NNManager(inputParameters, stockIDs,analysisParams);
-        nnManager.createGamingNeuralNetworks();
-    }
+//    @Test
+//    public void testCreateGamingNeuralNetworks() throws Exception {
+//        ArrayList<TradingDataAttribute> inputParameters = new ArrayList<>();
+//        inputParameters.add(TradingDataAttribute.CLOSING_PRICE);
+//        inputParameters.add(TradingDataAttribute.HIGH_PRICE);
+//        inputParameters.add(TradingDataAttribute.LOW_PRICE);
+//
+//        ArrayList<String> stockIDs = new ArrayList<>();
+//        stockIDs.add("SAMP");
+//        stockIDs.add("RCL");
+//        stockIDs.add("HASU");
+//
+//        ArrayList<String> analysisParams = new ArrayList<>();
+//        analysisParams.add("SAMP Stock Price");
+//        analysisParams.add("RCL Stock Price");
+//        analysisParams.add("HASU Stock Price");
+//
+//        NNManager nnManager = new NNManager(inputParameters, stockIDs,analysisParams);
+//        nnManager.createGamingNeuralNetworks();
+//    }
 }
