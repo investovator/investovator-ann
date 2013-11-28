@@ -18,29 +18,23 @@
 
 package org.investovator.ann.data.datanormalizing;
 
-import org.investovator.ann.nngaming.util.GameTypes;
-import org.investovator.core.data.api.utils.TradingDataAttribute;
-import org.junit.Test;
-
-import java.io.File;
-
 /**
  * @author: Hasala Surasinghe
  * @version: ${Revision}
  */
 public class NormalizationModelSerializerTest {
-    @Test
-    public void testSaveModel() throws Exception {
-        NormalizationModelSerializer modelSerializer = new NormalizationModelSerializer();
-        NormalizationModel model = new NormalizationModel();
-        modelSerializer.saveModel(model, TradingDataAttribute.CLOSING_PRICE.toString(),"SAMP", GameTypes.TRADING_GAME);
-        assert (new File("resources/SAMP").exists());
-    }
-
-    @Test
-    public void testReadModel() throws Exception {
-        NormalizationModelSerializer modelSerializer = new NormalizationModelSerializer();
-        NormalizationModel model = modelSerializer.readModel(TradingDataAttribute.CLOSING_PRICE.toString(),"SAMP",GameTypes.TRADING_GAME);
-        assert (model instanceof NormalizationModel);
-    }
+//    @Test
+//    public void testSaveModel() throws Exception {
+//        NormalizationModelSerializer modelSerializer = new NormalizationModelSerializer();
+//        NormalizationModel model = new NormalizationModel();
+//        modelSerializer.saveModel(model, TradingDataAttribute.CLOSING_PRICE.toString(),"SAMP", GameTypes.TRADING_GAME);
+//        assert (new File("resources/SAMP").exists());
+//    }
+//
+//    @Test
+//    public void testReadModel() throws Exception {
+//        NormalizationModelSerializer modelSerializer = new NormalizationModelSerializer();
+//        NormalizationModel model = modelSerializer.readModel(TradingDataAttribute.CLOSING_PRICE.toString(),"SAMP",GameTypes.TRADING_GAME);
+//        assert (model instanceof NormalizationModel);
+//    }
 }
