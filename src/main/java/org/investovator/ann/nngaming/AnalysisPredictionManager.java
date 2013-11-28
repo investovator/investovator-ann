@@ -88,7 +88,7 @@ public class AnalysisPredictionManager {
             tradingValues = tradingData.get(next);
             for(int j = 0; j < tradingAttributeCount; j++){
 
-                inputData[j] = Double.parseDouble(tradingValues.get(attributes.get(j)));
+                inputData[j] = Float.valueOf(tradingValues.get(attributes.get(j)));
 
 
             }
