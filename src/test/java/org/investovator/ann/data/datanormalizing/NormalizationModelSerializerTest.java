@@ -51,7 +51,7 @@ public class NormalizationModelSerializerTest {
         NormalizationModelSerializer modelSerializer = new NormalizationModelSerializer();
         NormalizationModel model = new NormalizationModel();
         modelSerializer.saveModel(model, TradingDataAttribute.CLOSING_PRICE.toString(),"SAMP", GameTypes.TRADING_GAME);
-        assert (new File("resources/SAMP").exists());
+        assert (new File("src/test/resources/TRADING_GAME/SAMP/CLOSING_PRICE").exists());
     }
 
     @Test
