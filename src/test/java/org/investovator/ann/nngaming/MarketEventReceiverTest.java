@@ -16,21 +16,37 @@
  *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.investovator.ann.neuralnet;
+package org.investovator.ann.nngaming;
 
-import org.investovator.core.data.api.utils.TradingDataAttribute;
+import org.investovator.ann.nngaming.events.AddBidEvent;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+
+import java.util.Observable;
+import java.util.Observer;
+
+import static junit.framework.Assert.assertTrue;
 
 /**
  * @author: Hasala Surasinghe
  * @version: ${Revision}
  */
-public class NNTrainerTest {
+public class MarketEventReceiverTest {
+
     @Before
     public void setUp() throws Exception {
+        class Listener implements Observer{
 
+            @Override
+            public void update(Observable o, Object arg) {
+                assertTrue(arg instanceof AddBidEvent);
+            }
+        }
+
+        Listener listener = new Listener();
+
+        MarketEventReceiver.getInstance().addObserver(listener);
     }
 
     @After
@@ -39,12 +55,9 @@ public class NNTrainerTest {
     }
 
     @Test
-    public void testTrainANN() throws Exception {
-        NNTrainer nnTrainer = new NNTrainer();
-        nnTrainer.setError(0.001);
-        nnTrainer.setIterationCount(10000);
-        nnTrainer.setPredictingAttribute(TradingDataAttribute.CLOSING_PRICE);
+    public void testSetValue() throws Exception {
+        MarketEventReceiver marketEventReceiver = MarketEventReceiver.getInstance();
+        marketEventReceiver.setValue(new AddBidEvent());
 
     }
-
 }

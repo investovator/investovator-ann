@@ -16,9 +16,8 @@
  *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.investovator.ann.neuralnet;
+package org.investovator.ann.nngaming;
 
-import org.investovator.core.data.api.utils.TradingDataAttribute;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -27,7 +26,7 @@ import org.junit.Test;
  * @author: Hasala Surasinghe
  * @version: ${Revision}
  */
-public class NNTrainerTest {
+public class EventSchedulerTest {
     @Before
     public void setUp() throws Exception {
 
@@ -39,12 +38,9 @@ public class NNTrainerTest {
     }
 
     @Test
-    public void testTrainANN() throws Exception {
-        NNTrainer nnTrainer = new NNTrainer();
-        nnTrainer.setError(0.001);
-        nnTrainer.setIterationCount(10000);
-        nnTrainer.setPredictingAttribute(TradingDataAttribute.CLOSING_PRICE);
-
+    public void testStopService() throws Exception {
+        EventScheduler eventScheduler = EventScheduler.getInstance();
+        eventScheduler.stopService();
+        assert (eventScheduler.service.isShutdown() == true);
     }
-
 }

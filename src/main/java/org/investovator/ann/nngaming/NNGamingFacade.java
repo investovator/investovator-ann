@@ -155,11 +155,4 @@ public class NNGamingFacade {
         this.daysCount = daysCount;
     }
 
-    public int getSpeedFactor() {
-        return speedFactor;
-    }
-
-    public void setSpeedFactor(int speedFactor) {
-        this.speedFactor = speedFactor;
-    }
 }

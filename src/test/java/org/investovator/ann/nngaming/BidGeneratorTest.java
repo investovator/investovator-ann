@@ -16,35 +16,22 @@
  *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.investovator.ann.neuralnet;
+package org.investovator.ann.nngaming;
 
-import org.investovator.core.data.api.utils.TradingDataAttribute;
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
+
+import java.util.ArrayList;
 
 /**
  * @author: Hasala Surasinghe
  * @version: ${Revision}
  */
-public class NNTrainerTest {
-    @Before
-    public void setUp() throws Exception {
-
-    }
-
-    @After
-    public void tearDown() throws Exception {
-
-    }
-
+public class BidGeneratorTest {
     @Test
-    public void testTrainANN() throws Exception {
-        NNTrainer nnTrainer = new NNTrainer();
-        nnTrainer.setError(0.001);
-        nnTrainer.setIterationCount(10000);
-        nnTrainer.setPredictingAttribute(TradingDataAttribute.CLOSING_PRICE);
+    public void testGetOrders() throws Exception {
+        BidGenerator bidGenerator = new BidGenerator();
+        ArrayList<Float> orders = bidGenerator.getOrders(124.25, 2, 4);
+        assert (orders.size() == 6);
 
     }
-
 }
