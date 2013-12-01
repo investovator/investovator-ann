@@ -74,7 +74,4 @@ public class BidGenerator {
 
     }
 
-    private float getSampleSpread(){
-        return sampleSpread;
-    }
 }

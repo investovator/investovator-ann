@@ -25,11 +25,15 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.ArrayList;
+
 /**
  * @author: Hasala Surasinghe
  * @version: ${Revision}
  */
 public class DataNormalizerTest {
+
+    ArrayList<TradingDataAttribute> attributes = new ArrayList<>();
 
     @Before
     public void setUp() throws Exception {
@@ -37,6 +41,12 @@ public class DataNormalizerTest {
         ConfigReceiver configReceiver = new ConfigReceiver();
         configReceiver.setBasePath("src/test");
 
+        attributes.add(TradingDataAttribute.HIGH_PRICE);
+        attributes.add(TradingDataAttribute.LOW_PRICE);
+        attributes.add(TradingDataAttribute.CLOSING_PRICE);
+        attributes.add(TradingDataAttribute.SHARES);
+        attributes.add(TradingDataAttribute.TRADES);
+        attributes.add(TradingDataAttribute.TURNOVER);
     }
 
     @After

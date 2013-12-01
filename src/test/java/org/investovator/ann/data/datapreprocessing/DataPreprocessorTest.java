@@ -16,43 +16,23 @@
  *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.investovator.ann.nngaming;
+package org.investovator.ann.data.datapreprocessing;
 
-import org.investovator.ann.nngaming.events.AddBidEvent;
-import org.investovator.ann.nngaming.events.DayChangedEvent;
+import org.investovator.core.data.api.utils.TradingDataAttribute;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.Observable;
-import java.util.Observer;
-
-import static junit.framework.Assert.assertTrue;
+import java.util.ArrayList;
 
 /**
  * @author: Hasala Surasinghe
  * @version: ${Revision}
  */
-public class MarketEventReceiverTest {
-
+public class DataPreprocessorTest {
     @Before
     public void setUp() throws Exception {
-        class Listener implements Observer{
 
-            @Override
-            public void update(Observable o, Object arg) {
-                if(arg instanceof AddBidEvent); {
-                    assertTrue(true);
-                }
-                if(arg instanceof DayChangedEvent)   {
-                    assertTrue(true);
-                }
-            }
-        }
-
-        Listener listener = new Listener();
-
-        MarketEventReceiver.getInstance().addObserver(listener);
     }
 
     @After
@@ -61,9 +41,21 @@ public class MarketEventReceiverTest {
     }
 
     @Test
-    public void testSetValue() throws Exception {
-        MarketEventReceiver marketEventReceiver = MarketEventReceiver.getInstance();
-        marketEventReceiver.setValue(new AddBidEvent());
-        marketEventReceiver.setValue(new DayChangedEvent());
+    public void testPreProcessData() throws Exception {
+        DataPreprocessor preprocessor = new DataPreprocessor();
+        double [][] marketData = {{234.2,245.2,25.4,8,1000,12000},{234.2,245.2,25.4,8,1000,12000},
+                {234.2,245.2,25.4,8,1000,12000}};
+
+        ArrayList<TradingDataAttribute> attributes = new ArrayList<>();
+        attributes.add(TradingDataAttribute.HIGH_PRICE);
+        attributes.add(TradingDataAttribute.LOW_PRICE);
+        attributes.add(TradingDataAttribute.CLOSING_PRICE);
+        attributes.add(TradingDataAttribute.SHARES);
+        attributes.add(TradingDataAttribute.TRADES);
+        attributes.add(TradingDataAttribute.TURNOVER);
+
+        double processedData[][] = preprocessor.preProcessData(marketData,attributes,TradingDataAttribute.CLOSING_PRICE);
+        assert (processedData[0].length == marketData[0].length + 1);
+
     }
 }
