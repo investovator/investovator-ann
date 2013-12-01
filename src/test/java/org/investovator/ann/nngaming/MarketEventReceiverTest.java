@@ -18,8 +18,9 @@
 
 package org.investovator.ann.nngaming;
 
-import org.investovator.ann.nngaming.events.AddBidEvent;
-import org.investovator.ann.nngaming.events.DayChangedEvent;
+import org.investovator.ann.nngaming.eventmanager.MarketEventReceiver;
+import org.investovator.ann.nngaming.eventmanager.events.AddBidEvent;
+import org.investovator.ann.nngaming.eventmanager.events.DayChangedEvent;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

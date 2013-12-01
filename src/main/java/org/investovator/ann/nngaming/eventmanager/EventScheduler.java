@@ -16,10 +16,10 @@
  *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.investovator.ann.nngaming;
+package org.investovator.ann.nngaming.eventmanager;
 
-import org.investovator.ann.nngaming.events.AddBidEvent;
-import org.investovator.ann.nngaming.events.DayChangedEvent;
+import org.investovator.ann.nngaming.eventmanager.events.AddBidEvent;
+import org.investovator.ann.nngaming.eventmanager.events.DayChangedEvent;
 
 import java.util.TimerTask;
 import java.util.concurrent.Executors;

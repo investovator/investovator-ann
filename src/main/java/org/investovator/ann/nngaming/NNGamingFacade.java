@@ -19,6 +19,7 @@
 package org.investovator.ann.nngaming;
 
 import org.investovator.ann.data.DataRetriever;
+import org.investovator.ann.nngaming.eventmanager.EventScheduler;
 import org.investovator.ann.nngaming.util.GameTypes;
 import org.investovator.core.data.api.utils.TradingDataAttribute;
 
@@ -38,7 +39,6 @@ public class NNGamingFacade {
     private float[] predictedValues;
     private ArrayList<Float> generatedBids;
     private int daysCount;
-    private int speedFactor;
 
     private static NNGamingFacade instance;
 

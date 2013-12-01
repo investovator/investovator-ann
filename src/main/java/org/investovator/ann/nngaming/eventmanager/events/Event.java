@@ -16,12 +16,11 @@
  *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.investovator.ann.nngaming.events;
+package org.investovator.ann.nngaming.eventmanager.events;
 
 /**
  * @author: Hasala Surasinghe
  * @version: ${Revision}
  */
-public class DayChangedEvent extends Event{
-
+public class Event {
 }
