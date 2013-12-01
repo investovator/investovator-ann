@@ -32,7 +32,7 @@ import java.util.Random;
  */
 public class PredictionValueManager {
 
-    private int NUM_OF_DAYS = 25;
+    private int daysCount;
     private float[] predictedValues;
     private NNPredictor nnPredictor;
     private double[] inputData;
@@ -41,10 +41,11 @@ public class PredictionValueManager {
     private String stockID;
     private GameTypes gameType;
 
-    public PredictionValueManager(String stockID){
+    public PredictionValueManager(String stockID,int daysCount){
+        this.daysCount = daysCount;
         this.stockID = stockID;
         this.nnPredictor = new NNPredictor();
-        this.predictedValues = new float[NUM_OF_DAYS];
+        this.predictedValues = new float[daysCount];
         this.attributes = new ArrayList<>();
         attributes.add(TradingDataAttribute.HIGH_PRICE);
         attributes.add(TradingDataAttribute.LOW_PRICE);
@@ -63,7 +64,7 @@ public class PredictionValueManager {
         inputData = dataRetriever.getGamingData(stockID,attributes);
         normalizeData();
 
-        for (int i = 0; i < NUM_OF_DAYS; i++){
+        for (int i = 0; i < daysCount; i++){
 
             float value = (float) nnPredictor.getPredictedValue(stockID,
                     attribute, inputData,gameType);
@@ -105,4 +106,5 @@ public class PredictionValueManager {
         }
 
     }
+
 }

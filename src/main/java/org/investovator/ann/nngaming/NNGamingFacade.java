@@ -37,6 +37,8 @@ public class NNGamingFacade {
     private PredictionValueManager predictionValueManager;
     private float[] predictedValues;
     private ArrayList<Float> generatedBids;
+    private int daysCount;
+    private int speedFactor;
 
     private static NNGamingFacade instance;
 
@@ -64,7 +66,7 @@ public class NNGamingFacade {
 
         if(predictedValues == null){                      //only predictions are retrieved once
 
-            predictionValueManager = new PredictionValueManager(stockID);
+            predictionValueManager = new PredictionValueManager(stockID,daysCount);
             predictedValues = predictionValueManager.getAllPredictionValues(TradingDataAttribute.CLOSING_PRICE, GameTypes.TRADING_GAME);
 
         }
@@ -125,7 +127,7 @@ public class NNGamingFacade {
 
     public float[] getPredictedPrices(String stockID, TradingDataAttribute attribute){
 
-        PredictionValueManager predictionValueManager = new PredictionValueManager(stockID);
+        PredictionValueManager predictionValueManager = new PredictionValueManager(stockID,daysCount);
         float[] predictedPrices = predictionValueManager.getAllPredictionValues(attribute, GameTypes.TRADING_GAME);
 
         for(int i = 0; i < predictedPrices.length; i++){
@@ -149,4 +151,15 @@ public class NNGamingFacade {
 
     }
 
+    public void setDaysCount(int daysCount) {
+        this.daysCount = daysCount;
+    }
+
+    public int getSpeedFactor() {
+        return speedFactor;
+    }
+
+    public void setSpeedFactor(int speedFactor) {
+        this.speedFactor = speedFactor;
+    }
 }

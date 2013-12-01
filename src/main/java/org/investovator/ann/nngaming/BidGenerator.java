@@ -73,4 +73,8 @@ public class BidGenerator {
         return orders;
 
     }
+
+    private float getSampleSpread(){
+        return sampleSpread;
+    }
 }

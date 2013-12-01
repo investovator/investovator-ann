@@ -33,15 +33,21 @@ import java.util.concurrent.TimeUnit;
 public class EventScheduler extends Thread {
 
     private final ScheduledExecutorService service = Executors.newSingleThreadScheduledExecutor();
-    private final int DAY_LENGTH = 80;
-    private final int BID_ADD_PERIOD = 23;
+    private final int DAY_LENGTH = 160;
+    private final int BID_ADD_PERIOD = 46;
+    private int speedFactor;
     private static EventScheduler instance;
     private MarketEventReceiver marketEventReceiver;
+    private NNGamingFacade nnGamingFacade;
+    private int dayLength;
+    private int bidLength;
 
     private EventScheduler(){
 
         marketEventReceiver = MarketEventReceiver.getInstance();
-
+        nnGamingFacade = NNGamingFacade.getInstance();
+        this.speedFactor = nnGamingFacade.getSpeedFactor();
+        calculateSchedulingParams();
     }
 
     //Taking an instance of class contains your repeated method.
@@ -71,8 +77,8 @@ public class EventScheduler extends Thread {
     @Override
     public void run() {
 
-        service.scheduleAtFixedRate(dayChange,DAY_LENGTH,DAY_LENGTH, TimeUnit.SECONDS);
-        service.scheduleAtFixedRate(bidAdd,0,BID_ADD_PERIOD,TimeUnit.SECONDS);
+        service.scheduleAtFixedRate(dayChange,dayLength,dayLength, TimeUnit.SECONDS);
+        service.scheduleAtFixedRate(bidAdd,0,bidLength,TimeUnit.SECONDS);
 
     }
 
@@ -80,4 +86,10 @@ public class EventScheduler extends Thread {
         service.shutdown();
     }
 
+    private void calculateSchedulingParams(){
+
+        dayLength = (DAY_LENGTH/speedFactor);
+        bidLength = (BID_ADD_PERIOD/speedFactor);
+
+    }
 }

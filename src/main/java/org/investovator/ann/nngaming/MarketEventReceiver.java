@@ -48,7 +48,6 @@ public class MarketEventReceiver extends Observable {
     public void setValue(Event newEvent) {
         // if value has changed notify observers
         if(!event.equals(newEvent)) {
-            //System.out.println("Value changed to new value: "+newEvent);
             event = newEvent;
 
             // mark as value changed
