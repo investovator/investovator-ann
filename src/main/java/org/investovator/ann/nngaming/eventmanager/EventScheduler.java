@@ -35,7 +35,7 @@ public class EventScheduler extends Thread {
     public final ScheduledExecutorService service = Executors.newSingleThreadScheduledExecutor();
     private final int DAY_LENGTH = 160;
     private final int BID_ADD_PERIOD = 46;
-    private int speedFactor;
+    private int speedFactor = 2;
     private static EventScheduler instance;
     private MarketEventReceiver marketEventReceiver;
     private int dayLength;
