@@ -94,9 +94,6 @@ public class NNManager {
 
             for(int j = 0; j < analysisParameters.size(); j++){
 
-                if(stockIDs.get(k).equals(analysisParameters.get(j)))
-                    continue;
-
                 analysisDataManager = new AnalysisDataManager(stockIDs.get(k),nnTrainer,inputParameters,
                         GameTypes.ANALYSIS_GAME,analysisParameters.get(j));
 
