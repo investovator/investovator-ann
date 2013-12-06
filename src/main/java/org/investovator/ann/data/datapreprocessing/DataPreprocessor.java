@@ -36,7 +36,7 @@ public class DataPreprocessor {
     public double[][] preProcessData(double[][] marketData, ArrayList<TradingDataAttribute> attributes,
                                      TradingDataAttribute attribute){
 
-        this.marketData = marketData;
+        setMarketData(marketData);
         this.attributes = attributes;
         this.attribute = attribute;
 
@@ -96,4 +96,7 @@ public class DataPreprocessor {
 
     }
 
+    public void setMarketData(double[][] marketData) {
+        this.marketData = marketData;
+    }
 }

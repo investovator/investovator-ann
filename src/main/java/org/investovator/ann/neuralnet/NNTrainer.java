@@ -92,7 +92,15 @@ public class NNTrainer {
     }
 
     public void setTrainingData(double[][] inputData,double[][] idealData){
+        setInputData(inputData);
+        setIdealData(idealData);
+    }
+
+    public void setInputData(double[][] inputData) {
         this.inputData = inputData;
+    }
+
+    public void setIdealData(double[][] idealData) {
         this.idealData = idealData;
     }
 

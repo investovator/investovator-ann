@@ -104,7 +104,7 @@ public class DataManager {
 
         //Normalizing Data Set
         dataNormalizer = new DataNormalizer(symbol,gameType);
-        normalizedData = dataNormalizer.getNormalizedData(preprocessedData,tradingDataAttributes);
+        normalizedData = dataNormalizer.getNormalizedData(preprocessedData,tradingDataAttributes,null);
 
         int normalizedDataRowCount = normalizedData.length;
         int normalizedDataColCount = normalizedData[0].length;

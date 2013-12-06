@@ -47,8 +47,9 @@ public class NormalizationModelSerializer {
 
             File modelSavePath = new File(basePath+"/resources/"+gameType.toString()+"/"+symbol);
 
-            if (!modelSavePath.exists())
+            if (!modelSavePath.exists()) {
                 modelSavePath.mkdirs();
+            }
 
             fos = new FileOutputStream(modelSavePath+"/"+fileName);
             out = new ObjectOutputStream(fos);

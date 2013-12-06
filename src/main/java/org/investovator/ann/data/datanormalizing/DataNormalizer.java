@@ -45,7 +45,7 @@ public class DataNormalizer {
     }
 
 
-    public double[][] getNormalizedData(double [][] dataArray,ArrayList<TradingDataAttribute> attributes){
+    public double[][] getNormalizedData(double [][] dataArray,ArrayList<TradingDataAttribute> attributes,String analysisSymbol){
 
         NormalizationModelSerializer serializer = new NormalizationModelSerializer();
         int columnCount = dataArray[0].length;
@@ -83,6 +83,8 @@ public class DataNormalizer {
             else if(j < (columnCount - 2) && (gameType == GameTypes.ANALYSIS_GAME))
                 serializer.saveModel(model, String.valueOf(attributes.get(j)), symbol, gameType);
 
+            else if(j == (columnCount - 2) && (gameType == GameTypes.ANALYSIS_GAME))
+                serializer.saveModel(model, String.valueOf(attributes.get(j)),analysisSymbol,gameType);
 
             for (int i = 0; i < rowCount; i++) {
 
